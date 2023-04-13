@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Demande{% endblock %}
+
+{% block body %}
+    <center> <h1>Create new Demande</h1> </center>
+
+   <center> {{ include('demande/_form.html.twig') }}
+
+    <a href="{{ path('app_demande_index') }}" style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;float: right;">back to list</a> </center>
+</br>
+</br>
+{% endblock %}

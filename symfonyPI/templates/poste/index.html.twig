@@ -1,0 +1,150 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poste index{% endblock %}
+
+{% block body %}
+   <center> <h1>liste des Postes </h1>  </center>
+
+  <div class="postes-container">
+  {% for poste in postes %}
+    <div class="card">
+      <h2 class="card-title">Poste</h2>
+      <img src="{{ asset('assets/demande_card.png') }}" alt="Image">
+      <p class="card-description"> </p>
+      
+      <ul class="card-details">
+        <li> <b>Description : </b> {{ poste.description }} ans</li>
+        <li> <b>Experience : </b> {{ poste.experience }} ans</li>
+      </ul>
+      <div class="card-actions">
+        <a href="{{ path('app_poste_show', {'idPoste': poste.idPoste}) }}" class="card-btn">Show</a>
+        <a href="{{ path('app_poste_edit', {'idPoste': poste.idPoste}) }}" class="card-btn">Edit</a>
+      </div>
+    </div>
+  {% else %}
+    <p class="no-records">No records found</p>
+  {% endfor %}
+</div>
+  
+ <br><br>
+
+</br>
+
+<style>
+.postes-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.card {
+  position: relative;
+  width: 320px;
+  height: 500px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2%;
+  background-color: #fdc134;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.card-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: black;
+  text-align: center;
+  padding-top: 20px;
+  font-weight:bold;
+}
+
+.card-description {
+  flex-grow: 1;
+  margin-bottom: 20px;
+  color: #222;
+  font-size: 16px;
+  text-align: justify;
+}
+
+.card-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.card-details li {
+  margin-bottom: 5px;
+  color: #777;
+  font-size: 14px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-btn {
+  background-color: #222;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+  align:center;
+}
+
+.card-btn:hover {
+  background-color: #fdc134;
+}
+
+.no-records {
+  margin: 20px;
+  font-style: italic;
+  color: #777;
+  font-size: 16px;
+  text-align: center;
+}
+</style>
+{% endblock %}

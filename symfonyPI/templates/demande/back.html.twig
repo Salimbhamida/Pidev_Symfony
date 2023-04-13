@@ -1,0 +1,47 @@
+{% extends 'backbase.html.twig' %}
+{% block body %}
+<center>  <h1>Demande </h1> </center> 
+
+<div class="table-container" style="margin-top: 50px;margin-left: 50px;margin-right: 50px;">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>IdDemande</th>
+                <th>NomRecruteur</th>
+                <th>Description</th>
+                <th>Experience</th>
+                <th>Remuneration</th>
+                <th>Telephone</th>
+                <th>Expiration</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for demande in demandes %}
+            <tr>
+                <td>{{ demande.idDemande }}</td>
+                <td>{{ demande.nomRecruteur }}</td>
+                <td>{{ demande.description }}</td>
+                <td>{{ demande.experience }}</td>
+                <td>{{ demande.remuneration }}</td>
+                <td>{{ demande.telephone }}</td>
+                <td>{{ demande.expiration ? demande.expiration|date('Y-m-d') : '' }}</td>
+                <td>
+                    
+                 <a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}" style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;">show</a>
+                    <a href="{{ path('app_demande_edit', {'idDemande': demande.idDemande}) }}" style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="8">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table> 
+    </div>
+    
+    {% endblock %}
+
+
+ 

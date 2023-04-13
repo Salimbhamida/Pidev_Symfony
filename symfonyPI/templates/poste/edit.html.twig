@@ -1,0 +1,15 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Poste{% endblock %}
+
+{% block body %}
+   <center>
+  <h3 style="font-size: 36px; font-weight: bold; color: #333; text-align: center; margin: 20px 0;">edit poste</h3>
+</center>
+<center>
+    {{ include('poste/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_poste_index') }}" style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;float: right;">back to list</a>
+</br>
+   </br></center>
+{% endblock %}
