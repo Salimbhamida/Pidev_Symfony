@@ -1,0 +1,94 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Categories {% endblock %}
+
+{% block body %}
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ 
+
+
+
+              <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Les categories</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion des categorie</li>
+          <li class="breadcrumb-item active">liste des categorie</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Data tables</h5>
+              <p>La liste des categories disponible dans Notre platfrome TN-Job</p>
+<a  type="button" class="btn btn-primary" href="{{ path('app_categories_new') }}"> 
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+ Ajouter une categorie</a>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">id Categorie</th>
+                    <th scope="col">Nom Categorie</th>
+                    <th scope="col">nbTotService</th>
+                    <th scope="col">Afficher une Categorie</th>
+                    <th scope="col">Modifier une Categorie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+            <tr>
+                <td>{{ category.idCategorie }}</td>
+                <td>{{ category.nomCategorie }}</td>
+                <td>{{ category.nbTotService }}</td>
+                <td>
+                    <a type="button" class="btn btn-success" href="{{ path('app_categories_show', {'idCategorie': category.idCategorie}) }}">Afficher</a></td>
+                  <td>  <a type="button" class="btn btn-warning" href="{{ path('app_categories_edit', {'idCategorie': category.idCategorie}) }}">Modifier</a></td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+  <a type="button"  class="btn btn-outline-secondary" onclick="countServices()"    class="btn btn-primary" type="button" disabled=""> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Calculer nombre des categories</a>
+    <div id="result"></div>
+            </div>
+          </div>
+<a type="button"  href="{{ path('trier_categorie') }}"          class="btn btn-primary"><i class="bi bi-star me-1"></i>Trier</a> </td>
+        </div>
+      </div>
+    </section>
+
+
+<script>
+        function countServices() {
+           
+            $.ajax({
+                 url: '{{ path('count_categorie_by_id') }}',
+                type: 'GET',
+                success: function(response) {
+                    
+                    $('#result').html(response);
+                }
+            });
+        }
+    </script>
+
+
+  </main>
+
+{% endblock %}

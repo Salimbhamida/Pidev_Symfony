@@ -1,0 +1,105 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Services {% endblock %}
+
+{% block body %}
+   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+
+
+
+      <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Les services</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion des service</li>
+          <li class="breadcrumb-item active">liste des services</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Data tables</h5>
+              <p>liste des service disponible dans la platfrome TN-Job</p>
+  <a type="button" class="btn btn-primary" href="{{ path('app_services_new') }}">                 <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+ Ajouter un service</a>
+ <div class="datatable-top">
+    <div class="datatable-dropdown">
+            <label>
+                <select class="datatable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select> entries per page
+            </label>
+        </div>
+    <div class="datatable-search">
+            <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+        </div>
+</div>
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">id Service</th>
+                    <th scope="col">Nom service</th>
+                    <th scope="col">nombre totale freelance</th>
+                    <th scope="col">Afficher un service</th>
+                    <th scope="col">Modifier un service</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for service in services %}
+            <tr>
+                <td>{{ service.idService }}</td>
+                <td>{{ service.nomService }}</td>
+                <td>{{ service.nbTotFreelance }}</td>
+                <td>
+                  <a type="button" class="btn btn-success" href="{{ path('app_services_show', {'idService': service.idService}) }}">Afficher</a> </td>
+                  <td> <a type="button" class="btn btn-warning" href="{{ path('app_services_edit', {'idService': service.idService}) }}">Modifier</a> </td>
+                  
+                  
+                
+               
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+                </tbody>
+          
+
+              </table>
+              <!-- End Table with stripped rows -->
+        <a type="button"  class="btn btn-outline-secondary" onclick="countServices()"  class="btn btn-primary" type="button" disabled=""> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>  Calculer nombre des services</a>
+    <div id="result"></div>
+            </div>
+          </div>
+ <a type="button"  href="{{ path('trier_services') }}"     class="btn btn-primary"><i class="bi bi-star me-1"></i>Trier</a> </td>
+        </div>
+      </div>
+    </section>
+
+
+    <script>
+        function countServices() {
+           
+            $.ajax({
+                 url: '{{ path('count_services_by_id') }}',
+                type: 'GET',
+                success: function(response) {
+                    
+                    $('#result').html(response);
+                }
+            });
+        }
+    </script>
+
+  </main>
+{% endblock %}
