@@ -1,0 +1,17 @@
+{% extends 'backBase.html.twig' %}
+
+{% block title %}Edit User{% endblock %}
+
+{% block content %}
+    <h1>Edit User</h1>
+<div class="container-md " style="margin-top: 5%;">
+    {{ include('user/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_user_index') }}">back to list</a>
+
+    {{ include('user/_delete_form.html.twig') }}
+</div>
+
+{% endblock %}
+
+

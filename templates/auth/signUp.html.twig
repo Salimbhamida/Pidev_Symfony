@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Sign Up Form by Colorlib</title>
+
+    <!-- Font Icon -->
+    <link rel="stylesheet" href="{{asset("/AuthTemplate/fonts/material-icon/css/material-design-iconic-font.min.css")}}">
+
+    <!-- Main css -->
+    <link rel="stylesheet" href="{{asset("/AuthTemplate/css/style.css")}}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+</head>
+<body>
+
+    <div class="main">
+
+   
+        <!-- Sign up form -->
+        <section class="signup">
+            <div class="container">
+                <div class="signup-content" >
+                    <div class="signup-form">
+                    
+                     
+      
+                        <h2 class="form-title">Sign up</h2>
+                        
+                        {{ form_start(registrationForm) }}
+                            <div class="form-group">
+                                <label for="registration_form_username"><i class="zmdi zmdi-account material-icons-name"></i></label>
+                                {{ form_widget(registrationForm.username) }}
+                        
+                            </div>
+                                    {{ form_errors(registrationForm.username) }}
+                            <div class="form-group">
+                                <label for="email"><i class="zmdi zmdi-email"></i></label>
+                                 {{ form_widget(registrationForm.email) }}
+                      
+                            </div>
+
+
+                                         {{ form_errors(registrationForm.email) }}
+                            <div class="form-group">
+                                <label for="pass"><i class="zmdi zmdi-lock"></i></label>
+                                {{ form_widget(registrationForm.plainPassword.first,{'attr': {'placeholder': 'Password'}}) }}
+                   
+                            </div>
+                                         {{form_errors(registrationForm.plainPassword.first)}}
+                             <div class="indicator">
+      <div class="icon-text">
+       <i class="bi bi-exclamation-diamond "></i>
+        <h6 class="text"></h6>
+      </div>
+    </div>
+                            <div class="form-group">
+                                <label for="re-pass"><i class="zmdi zmdi-lock-outline"></i></label>
+                                                 {{ form_widget(registrationForm.plainPassword.second,{'attr': {'placeholder': 'Repeat Your Password'}}) }}
+                                               
+                            </div>
+                               {{form_errors(registrationForm.plainPassword.second)}}
+                             <div class="form-group">
+      
+                                                  {{ form_widget(registrationForm.role)}}
+                                            
+                            </div>
+                                   {{ form_errors(registrationForm.role)}}
+                            <div class="form-group">
+                                <input type="checkbox" name="agree-term" id="agree-term" class="agree-term" required/>
+                                <label for="agree-term" class="label-agree-term"><span><span></span></span>I agree all statements in  <a href="#" class="term-service">Terms of service</a></label>
+                            </div>
+                            <div class="form-group form-button">
+                                <input type="submit" name="signup" id="signup" class="form-submit" value="Register"/>
+                            </div>
+                        {{ form_end(registrationForm) }}
+                    
+                    </div>
+                    <div class="signup-image">
+                        <figure><img src="{{asset("/AuthTemplate/images/signup-image.jpg")}}" alt="sing up image"></figure>
+                        <a href="{{path("app_login")}}" class="signup-image-link">I am already member</a>
+                    </div>
+                </div>
+ 
+            </div>
+        </section>
+
+     
+
+    </div>
+
+    <!-- JS -->
+    <script src="{{asset("/AuthTemplate/vendor/jquery/jquery.min.js")}}"></script>
+    <script src="{{asset("/AuthTemplate/js/main.js")}}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ENjdO4Dr2bkBIFxQpeoTz1HIcje39Wm4jDKdf19U8gI4ddQ3GYNS7NTKfAdVQSZe" crossorigin="anonymous"></script>
+    <script>
+  const input = document.querySelector(".password-field"),
+        showHide = document.querySelector(".show_hide"),
+        indicator = document.querySelector(".indicator"),
+        iconText = document.querySelector(".text"),
+        text = document.querySelector(".text");
+
+
+
+  // js code to show password strength (with regex)
+
+  let alphabet = /[a-zA-Z]/, //letter a to z and A to Z
+      numbers = /[0-9]/, //numbers 0 to 9
+      scharacters = /[!,@,#,$,%,^,&,*,?,_,(,),-,+,=,~]/; //special characters
+
+  input.addEventListener("keyup", ()=>{
+    indicator.classList.add("active");
+
+    let val = input.value;
+    if(val.match(alphabet) || val.match(numbers) || val.match(scharacters)){
+      text.textContent = "Password is weak";
+      input.style.borderColor = "#FF6333";
+  
+    }
+    if(val.match(alphabet) && val.match(numbers) && val.length >= 6){
+      text.textContent = "Password is medium";
+      input.style.borderColor = "#cc8500";
+
+    }
+    if(val.match(alphabet) && val.match(numbers) && val.match(scharacters) && val.length >= 8){
+      text.textContent = "Password is strong";
+      input.style.borderColor = "#22C32A";
+      
+    }
+
+    if(val == ""){
+      indicator.classList.remove("active");
+      input.style.borderColor = "#A6A6A6";
+
+    }
+  });
+
+  </script>
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
