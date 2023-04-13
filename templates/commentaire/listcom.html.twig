@@ -1,0 +1,72 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+
+
+ <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>List Commentaires</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion Commentaires</li>
+          <li class="breadcrumb-item active">List commentaire</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Commentaires</h5>
+              <p> <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank"></a>  <code></code> </p>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id_com</th>
+                    <th scope="col">date</th>
+                    <th scope="col">description</th>
+                    <th scope="col">id_rec</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for c in commentaire %}
+                  <tr>
+                    <th scope="row">1</th>
+
+                            <td>{{ c.id}}</td>
+                <td>{{c.getDateC ? c.getDateC|date("Y-m-d"):''}}</td>
+                <td>{{c.getDescriptionC}}</td>
+                 <td>{{c.reclamation.id}}</td>
+                   <td>
+                <a href="{{path('delete_Com',{'id':c.id})}}" class="btn btn-round btn-twitter">supprimer</a>
+                <a href="{{path('updateCommentaire',{'id':c.id})}}" class="btn btn-round btn-twitter">modifier</a>
+                </td>
+                  </tr>
+                       {% endfor %}  
+                  <tr>
+               
+                </tbody>
+              </table>
+            
+              <!-- End Table with stripped rows -->
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main><!-- End #main -->
+
+
+
+
+{% endblock %}

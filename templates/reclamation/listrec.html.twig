@@ -1,0 +1,58 @@
+{% extends 'baseback.html.twig' %}
+{% block body %}
+
+ <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>List Reclamations</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion Reclamation</li>
+          <li class="breadcrumb-item active">List reclamation</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Reclamations</h5>
+              <p> <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank"></a>  <code></code> </p>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <thead>
+                  <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">id_rec</th>
+                    <th scope="col">date_rec</th>
+                    <th scope="col">description</th>
+
+                  </tr>
+                </thead>
+                <tbody>
+                {% for p in reclamation %}
+                  <tr>
+                    <th scope="row">1</th>
+
+                <td>{{ p.Id}}</td>
+                <td>{{p.date ? p.date|date("Y-m-d"):''}}</td>
+                <td>{{p.description}}</td>
+                   <td>
+                <a href="{{path('delete_C',{'id':p.Id})}}" class="btn btn-round btn-twitter">supprimer</a>
+                <a href="{{path('updateReclmation',{'id':p.Id})}}" class="btn btn-round btn-twitter">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
