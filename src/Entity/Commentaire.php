@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\CommentaireRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentaireRepository::class)]
 class Commentaire
@@ -18,6 +19,15 @@ class Commentaire
     private ?\DateTimeInterface $date_c = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Description est obligatoire !")]
+    #[
+        Assert\Length(
+            min: 5,
+            max: 39,
+            minMessage: "La description doit comporter au moins 5 caractères ",
+            maxMessage: "La description doit comporter au plus 5 caractères",
+        )
+    ]
     private ?string $description_c = null;
 
     #[ORM\ManyToOne(inversedBy: 'commentaires')]

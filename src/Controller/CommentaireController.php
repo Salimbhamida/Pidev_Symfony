@@ -13,6 +13,8 @@ use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use App\Repository\CommentaireRepository;
 use App\Repository\ReclamationRepository;
+
+use Symfony\Component\Validator\Constraints\DateTime;
 class CommentaireController extends AbstractController
 {
     #[Route('/commentaire', name: 'app_commentaire')]
@@ -31,11 +33,13 @@ class CommentaireController extends AbstractController
 
       $commentaire=new Commentaire;
       $form=$this->createForm(CommentaireType::class, $commentaire);
-      $form->add('add', SubmitType::class);
+     // $form->add('add', SubmitType::class);
       $form->handleRequest($request);
       
       if ($form->isSubmitted() && $form->isValid())
       {
+        $date = new \DateTime();
+        $commentaire->setDateC($date);
         $em=$doctrine->getManager();
         $em->persist($commentaire);
         $em->flush();
@@ -74,7 +78,7 @@ class CommentaireController extends AbstractController
             $repository= $doctrine->getRepository(Commentaire::class);
             $commentaires=$repository->find($id);
              $form = $this-> createForm(CommentaireType::class,$commentaires);
-             $form->add('modify', SubmitType::class);
+             //$form->add('modify', SubmitType::class);
              $form->handleRequest($req);
              if($form->isSubmitted() )
              {

@@ -9,6 +9,7 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 class ReclamationController extends AbstractController
 {
@@ -27,15 +28,17 @@ class ReclamationController extends AbstractController
 
       $reclamation=new Reclamation;
       $form=$this->createForm(ReclamationType::class, $reclamation);
-      $form->add('add', SubmitType::class);
+      //$form->add('add', SubmitType::class);
       $form->handleRequest($request);
       
       if ($form->isSubmitted() && $form->isValid())
       {
+        $date = new \DateTime();
+        $reclamation->setDate($date);
         $em=$doctrine->getManager();
         $em->persist($reclamation);
         $em->flush();
-        return $this->redirectToRoute('list_rec');
+        return $this->redirectToRoute('form_C');
       }
       return $this->renderForm('reclamation/addrec.html.twig',['formC'=>$form,'reclamation' => $reclamation]);
 
@@ -60,7 +63,7 @@ class ReclamationController extends AbstractController
             $em= $doctrine->getManager();
             $em->remove($reclamation);
             $em->flush();
-            return $this->redirectToRoute('list_rec');
+            return $this->redirectToRoute('form_C');
         } 
 
 
@@ -70,19 +73,39 @@ class ReclamationController extends AbstractController
         $repository= $doctrine->getRepository(Reclamation::class);
         $reclamations=$repository->find($id);
          $form = $this-> createForm(ReclamationType::class,$reclamations);
-         $form->add('modify', SubmitType::class);
+         //$form->add('modify', SubmitType::class);
          $form->handleRequest($req);
          if($form->isSubmitted() )
          {
-        
+            $date = new \DateTime();
+            $reclamations->setDate($date);
             $em = $doctrine->getManager();
             $em->flush();
-            return $this->redirectToRoute('list_rec');
+            return $this->redirectToRoute('form_C');
          
          }
     
         return $this->renderForm("reclamation/editrec.html.twig",['formC'=>$form,'reclamations'=>$reclamations]);
         }
+
+
+        #[Route('/getRec/{id}', name: 'getrecid')]
+    public function show_id(ManagerRegistry $doctrine,ManagerRegistry $doc, $id): Response
+    {
+
+
+        $repository = $doctrine->getRepository(Reclamation::class);
+        $reclamations = $repository->find($id);
+        
+
+        $commentaire= $reclamations->getCommentaires();
+        return $this->render('reclamation/detailrec.html.twig', [
+            'Reclamation' => $reclamations,
+            'commentaire'  => $commentaire,
+       
+        ]);
+    }
+
 }
 
 

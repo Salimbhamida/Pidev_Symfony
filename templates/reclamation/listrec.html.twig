@@ -27,7 +27,7 @@
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                 {#   <th scope="col">#</th> #}
                     <th scope="col">id_rec</th>
                     <th scope="col">date_rec</th>
                     <th scope="col">description</th>
@@ -37,14 +37,14 @@
                 <tbody>
                 {% for p in reclamation %}
                   <tr>
-                    <th scope="row">1</th>
+                   {# <th scope="row">1</th> #}
 
                 <td>{{ p.Id}}</td>
                 <td>{{p.date ? p.date|date("Y-m-d"):''}}</td>
                 <td>{{p.description}}</td>
                    <td>
-                <a href="{{path('delete_C',{'id':p.Id})}}" class="btn btn-round btn-twitter">supprimer</a>
-                <a href="{{path('updateReclmation',{'id':p.Id})}}" class="btn btn-round btn-twitter">modifier</a>
+                <a href="{{path('delete_C',{'id':p.Id})}}"  class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                <a href="{{path('form_Com',{'id':p.Id})}}" class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a> 
                 </td>
             </tr>
         {% else %}

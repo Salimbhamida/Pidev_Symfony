@@ -28,7 +28,7 @@
               <table class="table datatable">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
+                  {#  <th scope="col">#</th> #}
                     <th scope="col">id_com</th>
                     <th scope="col">date</th>
                     <th scope="col">description</th>
@@ -38,15 +38,15 @@
                 <tbody>
                 {% for c in commentaire %}
                   <tr>
-                    <th scope="row">1</th>
+                    {#<th scope="row">1</th> #}
 
                             <td>{{ c.id}}</td>
                 <td>{{c.getDateC ? c.getDateC|date("Y-m-d"):''}}</td>
                 <td>{{c.getDescriptionC}}</td>
                  <td>{{c.reclamation.id}}</td>
                    <td>
-                <a href="{{path('delete_Com',{'id':c.id})}}" class="btn btn-round btn-twitter">supprimer</a>
-                <a href="{{path('updateCommentaire',{'id':c.id})}}" class="btn btn-round btn-twitter">modifier</a>
+                <a href="{{path('delete_Com',{'id':c.id})}}" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                <a href="{{path('updateCommentaire',{'id':c.id})}}"  class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a>
                 </td>
                   </tr>
                        {% endfor %}  

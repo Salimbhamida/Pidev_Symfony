@@ -1,60 +1,94 @@
 {% extends 'base.html.twig' %}
 {% block body %}
 
-<div class="content-page">
-    <div class="content">
-        <div class="container-fluid"
-        
- <div class="row">
-                <div class="col-md-12"  style="display: flex; justify-content: center;align-items:center;width: 100%" >
-                    <div class="card-box">
-                        <div class="dropdown pull-right">
-
-                            <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false">
-                                <i class="mdi mdi-dots-vertical"></i>
-                            </a>
-                            </div>
-                            </div>
-                            </div>
-                              </div>
-                            {{form_start(formC, {'attr': {novalidate: 'novalidate'}}) }}
 
 
-                        <div class="form-group">
-
-                            <label for="nom">Date</label>
 
 
-                            {{ form_widget(formC.date, {'attr': {'class': 'form-control'}}) }}
-                            {{ form_errors(formC.date, {'attr': {'class': 'text-danger'}}) }}
 
-                       </div>
 
+
+
+    <!-- ======= Contact Section ======= -->
+    <section id="contact" class="contact section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Reclamation</h2>
+          <p></p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-6">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="info-box" data-aos="fade-up">
+                  <i class="bx bx-map"></i>
+                  <h3>Notre Adresse</h3>
+                  <p>Rue valence, Tunis 2058</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-envelope"></i>
+                  <h3>Email Us</h3>
+                  <p>TN-JOB@gmail.com<br>Cybers@gmail.com</p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <i class="bx bx-phone-call"></i>
+                  <h3>Call Us</h3>
+                  <p>+216 71 500 000<br>+216 53 500 500</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 mt-4 mt-lg-0">
+            <div  role="form" class="php-email-form w-100" data-aos="fade-up">
+              <div class="row">
+               
+
+ {{form_start(formC, {'attr': {novalidate: 'novalidate'}}) }}
+
+
+          
 
                 
 
-                           <div class="form-group">
+                      
+          
 
-                            <label for="nom">description</label>
 
 
-                            {{ form_widget(formC.description, {'attr': {'class': 'form-control'}}) }}
+
+
+
+         
+              <div class="form-group mt-3">
+                   {{ form_widget(formC.description, {'attr': {'class': 'form-control'}}) }}
                             {{ form_errors(formC.description, {'attr': {'class': 'text-danger'}}) }}
-
-                       </div>
-
-
-                        <div class="form-group">
-                            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+              </div>
+             
+                   <div class="form-group">
+                                                             <div class="text-center">
+                            <button class="btn btn-primary">{{ button_label|default('envoyer') }}</button>
+  </div>
 
                         </div>
 
+            </div>
+                {{form_end(formC)}}
+          </div>
 
-                        {{form_end(formC)}}
+        </div>
 
-
-
-
+      </div>
+    </section><!-- End Contact Section -->
 
 
 
