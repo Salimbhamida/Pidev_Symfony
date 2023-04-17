@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit Scolarite{% endblock %}
+
+{% block body %}
+    <h1>Edit Scolarite</h1>
+
+    {{ include('scolarite/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a href="{{ path('app_scolarite_index') }}">back to list</a>
+
+    {{ include('scolarite/_delete_form.html.twig') }}
+{% endblock %}

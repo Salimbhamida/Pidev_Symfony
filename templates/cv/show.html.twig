@@ -1,0 +1,38 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Cv{% endblock %}
+
+{% block body %}
+    <h1>Cv</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ cv.id }}</td>
+            </tr>
+            <tr>
+                <th>Filename</th>
+                <td>{{ cv.filename }}</td>
+            </tr>
+            <tr>
+                <th>Filetype</th>
+                <td>{{ cv.filetype }}</td>
+            </tr>
+            <tr>
+                <th>Filesize</th>
+                <td>{{ cv.filesize }}</td>
+            </tr>
+            <tr>
+                <th>Data</th>
+                <td>{{ cv.data }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_cv_index') }}">back to list</a>
+
+    <a href="{{ path('app_cv_edit', {'id': cv.id}) }}">edit</a>
+
+    {{ include('cv/_delete_form.html.twig') }}
+{% endblock %}

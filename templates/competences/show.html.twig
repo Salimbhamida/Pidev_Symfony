@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Competences{% endblock %}
+
+{% block body %}
+    <h1>Competences</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>IdComp</th>
+                <td>{{ competence.idComp }}</td>
+            </tr>
+            <tr>
+                <th>Nom</th>
+                <td>{{ competence.nom }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_competences_index') }}">back to list</a>
+
+    <a href="{{ path('app_competences_edit', {'idComp': competence.idComp}) }}">edit</a>
+
+    {{ include('competences/_delete_form.html.twig') }}
+{% endblock %}

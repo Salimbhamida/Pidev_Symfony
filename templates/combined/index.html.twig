@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Create Your Profile{% endblock %}
+
+{% block body %}
+
+<div class="card-body">
+    <h3 class="card-title">Create your profile</h3><br>
+
+    <h5 class="card-title">Experiences</h5><br>
+
+    {{ form_start(form) }}
+    
+    <div class="form-group">
+        {{ form_label(form.nomEntreprise) }}
+        {{ form_widget(form.nomEntreprise) }}
+        {{ form_errors(form.nomEntreprise) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.poste) }}
+        {{ form_widget(form.poste) }}
+        {{ form_errors(form.poste) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.dateDebut) }}
+        {{ form_widget(form.dateDebut) }}
+        {{ form_errors(form.dateDebut) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.dateFin) }}
+        {{ form_widget(form.dateFin) }}
+        {{ form_errors(form.dateFin) }}
+    </div>
+
+    <h5 class="card-title">Education</h5><br>
+
+    <div class="form-group">
+        {{ form_label(form.nom) }}
+        {{ form_widget(form.nom) }}
+        {{ form_errors(form.nom) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.nomEtablissement) }}
+        {{ form_widget(form.nomEtablissement) }}
+        {{ form_errors(form.nomEtablissement) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.ville) }}
+        {{ form_widget(form.ville) }}
+        {{ form_errors(form.ville) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.pays) }}
+        {{ form_widget(form.pays) }}
+        {{ form_errors(form.pays) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.diplome) }}
+        {{ form_widget(form.diplome) }}
+        {{ form_errors(form.diplome) }}
+    </div>
+
+    <div class="form-group">
+        {{ form_label(form.dateObtention) }}
+        {{ form_widget(form.dateObtention) }}
+        {{ form_errors(form.dateObtention) }}
+    </div>
+
+    <div class="d-grid gap-2 col-6 mx-auto">
+        <button class="btn btn-primary" type="submit">Save</button>
+    </div>
+
+    {{ form_end(form) }}
+</div>
+
+{% endblock %}

@@ -1,0 +1,7 @@
+
+{% block delete_form %}
+<form method="post" action="{{ path('app_competences_delete', {'idComp': competence.idComp}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ competence.idComp) }}">
+    <button class="btn">Delete</button>
+</form>
+{% endblock %}

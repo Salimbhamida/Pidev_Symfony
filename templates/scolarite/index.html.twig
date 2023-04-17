@@ -1,0 +1,39 @@
+
+
+{% block body %}
+    <h1>Education </h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>NomEtablissement</th>
+                <th>Ville</th>
+                <th>Pays</th>
+                <th>Diplome</th>
+                <th>DateObtention</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for scolarite in scolarites %}
+            <tr>
+                <td>{{ scolarite.nomEtablissement }}</td>
+                <td>{{ scolarite.ville }}</td>
+                <td>{{ scolarite.pays }}</td>
+                <td>{{ scolarite.diplome }}</td>
+                <td>{{ scolarite.dateObtention ? scolarite.dateObtention|date('Y-m-d') : '' }}</td>
+                <td>
+                    <a href="{{ path('app_scolarite_show', {'idEtab': scolarite.idEtab}) }}">show</a>
+                    <a href="{{ path('app_scolarite_edit', {'idEtab': scolarite.idEtab}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_scolarite_new') }}">Create new</a>
+{% endblock %}
