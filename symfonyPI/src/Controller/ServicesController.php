@@ -7,14 +7,17 @@ use App\Form\ServicesType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
+
 use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityRepository;
 use App\Repository\CategoriesRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
-use Doctrine\ORM\QueryBuilder; 
+use Doctrine\ORM\QueryBuilder;
 
 
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Http\RememberMe\ResponseListener;
 
 #[Route('/services')]
 class ServicesController extends AbstractController
@@ -47,6 +50,38 @@ class ServicesController extends AbstractController
        
         return new Response('Le nombre de services totale de notre plateforme TN-JOB est   :' . $count );
     }
+
+    #[Route('/recherche/service', name: 'rechercheService' )]
+    public function rechercheService(request $request, EntityManagerInterface $entityManager)
+    {
+        $nomservice = $request->request->get('nomservice');
+
+        // Utiliser le Query Builder pour effectuer la recherche
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('s')
+            ->from('App\Entity\Services', 's')
+            ->where('s.nomService LIKE :nomservice')
+            ->setParameter('nomservice', '%' . $nomservice . '%');
+
+        $services = $queryBuilder->getQuery()->getResult();
+
+        $servicesArray = [];
+        foreach ($services as $service) {
+            $servicesArray[] = [
+                'id' => $service->getIdservice(),
+                'nomservice' => $service->getNomService(),
+                'nbtotfreelance' => $service->getNbTotFreelance()
+            ];
+        }
+
+        // Retourner les résultats sous forme de JsonResponse
+        $response = new JsonResponse(['services' => $servicesArray]);
+        
+        return $response;
+    }
+
+
+   
 
 
 
@@ -92,6 +127,7 @@ class ServicesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+        
             $entityManager->persist($service);
             $entityManager->flush();
 
@@ -119,6 +155,9 @@ class ServicesController extends AbstractController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+                
+
+
             $entityManager->flush();
 
             return $this->redirectToRoute('app_services_index', [], Response::HTTP_SEE_OTHER);
