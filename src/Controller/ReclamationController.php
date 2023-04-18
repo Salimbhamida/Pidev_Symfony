@@ -10,6 +10,10 @@ use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Validator\Constraints\DateTime;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
+
+
 
 class ReclamationController extends AbstractController
 {
@@ -22,7 +26,7 @@ class ReclamationController extends AbstractController
     }
 
     #[Route('/addrec', name: 'form_C')]
-    public function Addreclamation(HttpFoundationRequest $request, ManagerRegistry $doctrine): Response
+    public function Addreclamation(HttpFoundationRequest $request, ManagerRegistry $doctrine,NotifierInterface $notifier): Response
     {  
         $repository= $doctrine->getRepository(Reclamation::class);
 
@@ -31,18 +35,37 @@ class ReclamationController extends AbstractController
       //$form->add('add', SubmitType::class);
       $form->handleRequest($request);
       
+      $myDictionary = array(
+        "louz", "kloub", "homs","bondok",
+        
+        "kakawia"
+    );
+    dump($request);
+    {
       if ($form->isSubmitted() && $form->isValid())
       {
         $date = new \DateTime();
         $reclamation->setDate($date);
+
+        $myText = $request->get("reclamation")['description'];
+            
+        $badwords = new PhpBadWordsController();
+        $badwords->setDictionaryFromArray($myDictionary)
+            ->setText($myText);
+        $check = $badwords->check();
+        dump($check);
+        if ($check){
+        $notifier->send(new Notification('Mauvais mot ', ['browser']));} 
+            else {
+       
         $em=$doctrine->getManager();
         $em->persist($reclamation);
         $em->flush();
         return $this->redirectToRoute('form_C');
-      }
+      }}
       return $this->renderForm('reclamation/addrec.html.twig',['formC'=>$form,'reclamation' => $reclamation]);
 
-        }
+        }}
 
         #[Route('/listrec', name: 'list_rec')]
     public function listc(ManagerRegistry $doctrine): Response
