@@ -103,17 +103,17 @@
 
   <main id="main">
 
-
+{#
 
     
-  {#
+  
     <section class="inner-page">
       <div class="container">
         <p>
           
         </p>
       </div>
-    </section> #}
+    </section> 
 
    <!-- ======= Hero Section ======= -->
    <section id="hero">
@@ -159,7 +159,7 @@
 
 
 
-
+#}
 
 
 
@@ -167,10 +167,42 @@
 
 
     <!-- ======= demandes d'emploi Section ======= -->
-    <section id="dm_emploi" class="team section-bg">
+
+
+    
+     {{ form_start(form, {'attr': {'class': 'my-form1', 'novalidate': 'novalidate'}}) }}
+
+    {{ form_label(form.searchedby, null, {'label_attr': {'class': 'd-none'}}) }}
+    {{ form_widget(form.searchedby, {'attr': {'class': 'form-control', 'placeholder': 'Search'}}) }}
+    {{ form_widget(form.search, {'attr': {'class': 'btn btn-primary'}}) }}
+    {{ form_end(form) }}
+
+
+           {{ form_start(sortForm, {'attr': {'class': 'my-form2', 'novalidate': 'novalidate'}}) }}
+
+             
+             {{ form_row(sortForm.sortby, {'label_attr': {'class': 'visually-hidden'}}) }}
+              {{ form_row(sortForm.sortorder, {'label_attr': {'class': 'visually-hidden'}}) }}
+
+            {{ form_end(sortForm) }}  
+
+            
+
+
+
+
+
 
 
      <center>  <h1>Demande </h1> </center> 
+
+
+
+
+
+
+
+
 
     <div class="card-container">
   {% for demande in demandes %}
@@ -325,6 +357,63 @@
   font-size: 16px;
   text-align: center;
 }
+{##}
+
+.my-form1 .form-control {
+    margin-left: 100px;
+    margin-top: 3px;
+    width: 20%;
+}
+
+.my-form1 .btn-primary {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 300px;
+    margin-top: 5px;
+}
+
+.my-form1 .btn-primary:hover {
+    background-color: #0062cc;
+}
+
+.my-form1 {
+    margin-top: 30px;
+   
+}
+
+.my-form2 .form-control {
+    margin-left: 1000px;
+    margin-top: 4px;
+    width: 30%;
+}
+
+.my-form2 .btn-primary {
+    background-color: #ff0000;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-left: 1000px;
+    margin-top: 5px;
+}
+
+.my-form2 .btn-primary:hover {
+    background-color: #cc0000;
+}
+
+.my-form2 {
+    margin-top: 5px;
+    
+}
+
+
+
+
 </style>
       
     </section><!-- End Team Section -->
