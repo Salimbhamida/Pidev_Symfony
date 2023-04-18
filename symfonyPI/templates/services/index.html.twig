@@ -4,8 +4,8 @@
 
 {% block body %}
    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-
+  
+ 
 
 
       <main id="main" class="main">
@@ -42,7 +42,7 @@
         </div>
 </div>
               <!-- Table with stripped rows -->
-              <table class="table datatable">
+              <table class="table datatable"   id="services-table">
                 <thead>
                   <tr>
                    
@@ -84,7 +84,71 @@
  <a type="button"  href="{{ path('trier_services') }}"     class="btn btn-primary"><i class="bi bi-star me-1"></i>Trier</a> </td>
         </div>
       </div>
+
+   <form id="recherche-form" action="{{ path('rechercheService') }}" method="post">
+    <label for="nomservice">Nom du service :</label>
+    <input type="text" id="nomservice" name="nomservice">
+    <button type="submit">Rechercher</button>
+</form>
+
+
+
+
     </section>
+
+
+
+
+
+
+
+
+<script>
+    var rechercheForm = document.getElementById('recherche-form');
+    rechercheForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+      
+        var nomservice = document.getElementById('nomservice').value;
+
+        //  Ajax 
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/services/recherche/service', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+               
+               
+                var services = response.services;
+  console.log(response.services);
+       
+                var servicesTable = document.getElementById('services-table');
+                var tbody = servicesTable.getElementsByTagName('tbody')[0];
+                tbody.innerHTML = ''; 
+
+       
+                for (var i = 0; i < services.length; i++) {
+                    var service = services[i];
+                    var row = tbody.insertRow(i);
+                    var idCell = row.insertCell(0);
+                    var nomServiceCell = row.insertCell(1);
+                    var nbServiceCell = row.insertCell(2);
+
+                    idCell.innerHTML = service.id;
+                    
+                    nomServiceCell.innerHTML = service.nomservice;
+                       nbServiceCell.innerHTML = service.nbtotfreelance;        
+                }
+            }
+        };
+
+        xhr.send('nomservice=' + encodeURIComponent(nomservice)); 
+ 
+    });
+</script>
+
+
 
 
     <script>
