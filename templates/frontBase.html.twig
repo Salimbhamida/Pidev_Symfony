@@ -40,7 +40,12 @@
 
 		<!-- Template Main CSS File -->
 		<link href="{{asset("/FrontEndTemplate/css/style.css")}}" rel="stylesheet">
-
+    <style
+    type="text/css">
+    
+     {% block css %}
+     {% endblock %}
+    </style>
 	</head>
 
 	<body>
@@ -113,17 +118,23 @@
 						</li>
 						<li>
   <div class="dropdown">
-  	<a class="getstarted scrollto" href="{{path("app_login")}}">Profile</a>
-   
+      {% if app.user %}
+       	<a class="getstarted scrollto" href="{{path("Profile", {'id': app.user.getId})}}">Profile</a>
+ 
+  {% else %}
+   	<a class="getstarted scrollto" href="{{path("app_login")}}">Se Connecter</a>
+     {% endif %}
+
   <ul class="dropdown-menu">
   
     {% if app.user %}
         <div class="mb-3">
             You are logged in as {{ app.user.userIdentifier }}
         </div>
-    {% endif %}
+    {% else %}
     <li><a class="dropdown-item" href="{{path("app_login")}}"> Se Connecter</a></li>
     <li><a class="dropdown-item" href="{{path("app_register")}}"> S'inscrire</a></li>
+    {% endif %}
  {% if is_granted('ROLE_USER') %}
 <a class="nav-link" href="{{ path('app_logout') }}">Logout</a>
 {% endif %}
@@ -139,7 +150,7 @@
 		</header>
 		<!-- End Header -->
 
-
+{% block hero %}
 		<!-- ======= Hero Section ======= -->
 		<section id="hero">
 
@@ -158,6 +169,7 @@
 
 		</section>
 		<!-- End Hero -->
+    {% endblock  %}
 {% block content %}
 		<main
 			id="main">

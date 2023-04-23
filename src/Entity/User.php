@@ -13,8 +13,9 @@ use Symfony\Component\Security\Core\User\UserInterface;
  * User
  *
  * @ORM\Table(name="user")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  */
+
 #[UniqueEntity(fields: ['email'], message: 'There is already an account with this email')]
 class User implements UserInterface
 {
@@ -52,6 +53,7 @@ class User implements UserInterface
    *
    * @ORM\Column(name="password", type="string", length=60, nullable=false)
    */
+
   private $password;
 
   /**
@@ -66,6 +68,7 @@ class User implements UserInterface
   /**
    * @ORM\Column(type="json")
    */
+
   private $roles = [];
 
 
@@ -91,8 +94,7 @@ class User implements UserInterface
    */
   private $updatedAt;
 
-  #[ORM\Column(type: 'boolean')]
-  private $isVerified = false;
+
 
   public function getId(): ?int
   {
@@ -104,7 +106,7 @@ class User implements UserInterface
     return $this->username;
   }
 
-  public function setUsername(string $username): self
+  public function setUsername(?string $username): self
   {
     $this->username = $username;
 
@@ -116,7 +118,7 @@ class User implements UserInterface
     return $this->email;
   }
 
-  public function setEmail(string $email): self
+  public function setEmail(?string $email): self
   {
     $this->email = $email;
 
@@ -128,7 +130,7 @@ class User implements UserInterface
     return $this->password;
   }
 
-  public function setPassword(string $password): self
+  public function setPassword(?string $password): self
   {
     $this->password = $password;
 

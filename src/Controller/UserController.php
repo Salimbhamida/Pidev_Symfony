@@ -4,12 +4,16 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\UserType;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+
 
 
 class UserController extends AbstractController
@@ -134,5 +138,22 @@ WHERE s.email = :email ');
     }
 
     return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+  }
+  #[Route('/tn-jobs/admin/Pdf/{id}', name: 'generatePdf')]
+  public function pdf(User $user)
+  {
+    $html =  $this->renderView('pdf/index.html.twig',  [
+      'user' => $user,
+    ]);
+    $options = new Options();
+    $options->set('isHtml5ParserEnabled', true);
+    $options->set('isRemoteEnabled', true);
+    $dompdf = new Dompdf($options);
+    $dompdf->loadHtml($html);
+    $dompdf->setPaper('A4', 'landscape');
+    $dompdf->render();
+    $dompdf->stream("Pdf.pdf", [
+      "Attachment" => false
+    ]);
   }
 }

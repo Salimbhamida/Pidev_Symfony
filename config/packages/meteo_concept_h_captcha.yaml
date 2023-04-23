@@ -1,0 +1,4 @@
+meteo_concept_h_captcha:
+    hcaptcha:
+        site_key: 42fa8dfd-29ee-43d1-8b0e-eecee058ea44
+        secret: '%env(resolve:HCAPTCHA_SECRET)%'

@@ -15,13 +15,13 @@ class UserType extends AbstractType
   {
     $builder
       ->add('username', null, [
-        'attr' => ['class' => 'form-control', 'placeholder' => 'Username']
+        'attr' => ['class' => 'form-control', 'placeholder' => 'Username', 'empty_data' => '']
       ])
       ->add('email', null, [
-        'attr' => ['class' => 'form-control', 'placeholder' => 'Email']
+        'attr' => ['class' => 'form-control', 'placeholder' => 'Email', 'empty_data' => '']
       ])
       ->add('password', PasswordType::class, [
-        'attr' => ['class' => 'form-control', 'placeholder' => 'Password']
+        'attr' => ['class' => 'form-control', 'placeholder' => 'Password', 'empty_data' => '']
       ])
       ->add('role', ChoiceType::class, [
         'attr' => ['class' => 'form-select form-select-lg mb-3'],

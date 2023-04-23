@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Repository\UserRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -23,11 +25,12 @@ class RouteController extends AbstractController
       'controller_name' => 'RouteController',
     ]);
   }
-  #[Route('/tn-jobs/admin', name: 'Back')]
-  public function admin(): Response
+  #[Route('/tn-jobs/profile/{id}', name: 'Profile')]
+  public function Profile(User $user): Response
   {
-    return $this->render('/backBase.html.twig', [
+    return $this->render('user/profile.html.twig', [
       'controller_name' => 'RouteController',
+      'user' => $user,
     ]);
   }
 }

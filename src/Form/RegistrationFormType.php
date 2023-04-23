@@ -3,6 +3,9 @@
 namespace App\Form;
 
 use App\Entity\User;
+use Karser\Recaptcha3Bundle\Form\Recaptcha3Type;
+use Karser\Recaptcha3Bundle\Validator\Constraints\Recaptcha3;
+use MeteoConcept\HCaptchaBundle\Form\HCaptchaType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -56,7 +59,12 @@ class RegistrationFormType extends AbstractType
           'Candidat' => 'candidat',
           'Recruteur' => 'recruteur',
         ],
-      ],);
+      ],)
+      ->add('captcha', HCaptchaType::class, [
+        'label' => 'Anti-bot test',
+        // optionally: use a different site key than the default one:
+        'hcaptcha_site_key' => '42fa8dfd-29ee-43d1-8b0e-eecee058ea44',
+      ]);
   }
 
   public function configureOptions(OptionsResolver $resolver): void

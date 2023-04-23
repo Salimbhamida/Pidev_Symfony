@@ -161,6 +161,8 @@ img {
         
     <li>       <a class="dropdown-item" href="{{ path('app_user_edit', {'id': user.id}) }}" class="edit" title="Edit" data-toggle="tooltip"><i class="material-icons">&#xE254;</i>Edit</a></li>
     <li>                    <a class="dropdown-item" href="{{path('app_user_delete', {'id': user.id})}}" class="delete" title="Delete" data-toggle="tooltip"><i class="material-icons">&#xE872;</i>Delete</a></li>
+    <li><a href="{{ path('generatePdf', {'id': user.id}) }}" class="dropdown-item" title="Pdf" data-toggle="tooltip"><i class="bi bi-filetype-pdf"></i> 
+</a></li>
   </ul>
 </div></td>
                 </tr>
