@@ -1,0 +1,14 @@
+# config/packages/knp_snappy.yaml
+
+knp_snappy:
+    pdf:
+        enabled: true
+        binary: "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe\""
+        options:
+            no-outline: true
+            encoding: 'UTF-8'
+            page-size: A4
+    image:
+        enabled: true
+        binary: "\"C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltoimage.exe\""
+        

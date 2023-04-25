@@ -1,0 +1,151 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Demande index{% endblock %}
+
+{% block body %} 
+  <center>  <h1>Mes Demandes </h1> </center> 
+    <a href="{{ path('app_demande_new') }}" style="display: inline-block; margin-left: 1110px; background-color: #fdc134; color: white; border: 2px solid #fdc134; border-radius: 5px; padding: 8px 15px; font-size: 20px; text-decoration: none;">Déposer une nouvelle demande</a>
+
+    <div class="card-container">
+  {% for demande in demandes %}
+    <div class="card">
+      <h2 class="card-title">{{ demande.nomRecruteur }}</h2>
+      <p class="card-description">{{ demande.description }}</p>
+       <img src="{{ asset('assets/hiring1.jpg') }}" alt="Image">
+      <ul class="card-details">
+        <li>Experience: {{ demande.experience }}</li>
+        <li>Remuneration: {{ demande.remuneration }}</li>
+        <li>Telephone: {{ demande.telephone }}</li>
+        <li>Expiration: {{ demande.expiration ? demande.expiration|date('Y-m-d') : '' }}</li>
+      </ul>
+      <div class="card-actions">
+        <a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}" class="card-btn">show</a>
+        <a href="{{ path('app_demande_edit', {'idDemande': demande.idDemande}) }}" class="card-btn">Edit</a> 
+        
+        {# <a href="{{ path('app_poste_new', {'idDemande': demande.idDemande}) }}" class="card-btn">deposer</a>  #}
+      </div>
+      
+    </div>
+  {% else %}
+    <p class="no-records">No records found</p>
+  {% endfor %}
+  
+</div>
+ 
+</br>
+
+
+<style>
+
+
+.card-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 30px;
+}
+
+.card {
+  position: relative;
+  width: 320px;
+  height: 500px;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background-color: #fff;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.2s ease-in-out;
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25),
+    0 10px 10px rgba(0, 0, 0, 0.22);
+}
+
+.card:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 2%;
+  background-color: #fdc134;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.card img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+}
+
+.card-title {
+  font-size: 22px;
+  margin-bottom: 10px;
+  color: black;
+  text-align: center;
+  padding-top: 20px;
+  font-weight:bold;
+}
+
+.card-description {
+  flex-grow: 1;
+  margin-bottom: 20px;
+  color: #222;
+  font-size: 16px;
+  text-align: justify;
+}
+
+.card-details {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  margin-bottom: 10px;
+}
+
+.card-details li {
+  margin-bottom: 5px;
+  color: #777;
+  font-size: 14px;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-btn {
+  background-color: #222;
+  color: #fff;
+  border: none;
+  padding: 12px 20px;
+  font-size: 16px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.2s ease-in-out;
+  align:center;
+}
+
+.card-btn:hover {
+  background-color: #fdc134;
+}
+
+.no-records {
+  margin: 20px;
+  font-style: italic;
+  color: #777;
+  font-size: 16px;
+  text-align: center;
+}
+</style>
+{% endblock %}
