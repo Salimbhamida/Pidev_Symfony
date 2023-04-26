@@ -18,9 +18,25 @@ class DashboardController extends AbstractController
     $users = $entityManager
       ->getRepository(User::class)
       ->findAll();
+    $freelancer =
+      $entityManager
+      ->getRepository(User::class)
+      ->freelancer();
+    $recruteur
+      =
+      $entityManager
+      ->getRepository(User::class)
+      ->recruteur();
+    $candidat
+      = $entityManager
+      ->getRepository(User::class)
+      ->candidat();
     return $this->render('Dashboard/index.html.twig', [
       'nb_user' => $nb,
       'list' => $users,
+      'freelancer' => $freelancer,
+      'recruteur' => $recruteur,
+      'candidat' => $candidat,
 
     ]);
   }

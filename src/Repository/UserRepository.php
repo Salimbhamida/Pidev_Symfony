@@ -20,4 +20,31 @@ class UserRepository extends ServiceEntityRepository
       ->getQuery()
       ->getSingleScalarResult();
   }
+  public function freelancer(): ?int
+  {
+    return $this->createQueryBuilder('u')
+      ->select('count(u.id)')
+      ->where('u.role=:value')
+      ->setParameter('value', 'freelancer')
+      ->getQuery()
+      ->getSingleScalarResult();
+  }
+  public function recruteur(): ?int
+  {
+    return $this->createQueryBuilder('u')
+      ->select('count(u.id)')
+      ->where('u.role=:value')
+      ->setParameter('value', 'recruteur')
+      ->getQuery()
+      ->getSingleScalarResult();
+  }
+  public function candidat(): ?int
+  {
+    return $this->createQueryBuilder('u')
+      ->select('count(u.id)')
+      ->where('u.role=:value')
+      ->setParameter('value', 'candidat')
+      ->getQuery()
+      ->getSingleScalarResult();
+  }
 }
