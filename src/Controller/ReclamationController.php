@@ -3,15 +3,20 @@
 namespace App\Controller;
 use App\Entity\Reclamation;
 use App\Form\ReclamationType;
+use App\Repository\ReclamationRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\Request as HttpFoundationRequest;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
+
 
 
 
@@ -68,15 +73,37 @@ class ReclamationController extends AbstractController
         }}
 
         #[Route('/listrec', name: 'list_rec')]
-    public function listc(ManagerRegistry $doctrine): Response
-    {
-        $repository= $doctrine->getRepository(Reclamation::class);
-        $reclamations=$repository->findAll();
-        return $this->render('reclamation/listrec.html.twig', [
-            'reclamation' => $reclamations,
-        ]);
-    }
-
+        public function listc(Request $request, ReclamationRepository $reclamationRepository): Response
+        {
+            $form = $this->createFormBuilder()
+                ->add('searchedby', TextType::class, [
+                    'required' => false
+                ])
+                ->add('search', SubmitType::class)
+                ->getForm();
+        
+            $form->handleRequest($request);
+            if ($form->isSubmitted() && $form->isValid()) {
+                $data = $form->getData();
+                $searchTerm = strtolower($data['searchedby']);
+        
+                $queryBuilder = $reclamationRepository->createQueryBuilder('d');
+                if ($searchTerm) {
+                    $queryBuilder->where('LOWER(d.id) LIKE :searchTerm')
+                        ->orWhere('LOWER(d.description) LIKE :searchTerm')
+                        ->setParameter('searchTerm', '%' . $searchTerm . '%');
+                }
+        
+                $reclamations = $queryBuilder->getQuery()->getResult();
+            } else {
+                $reclamations = $reclamationRepository->findAll();
+            }
+        
+            return $this->render('reclamation/listrec.html.twig', [
+                'reclamation' => $reclamations,
+                'form' => $form->createView()
+            ]);
+        }
 
        #[Route('/delete/{id}', name: 'delete_C')]
         public function Deletereclamation(ManagerRegistry $doctrine, $id): Response
@@ -129,6 +156,8 @@ class ReclamationController extends AbstractController
         ]);
     }
 
+
+  
 }
 
 

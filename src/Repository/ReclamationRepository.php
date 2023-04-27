@@ -63,4 +63,28 @@ class ReclamationRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+   
+// public function countUnresolvedComplaints()
+// {
+//     return $this->createQueryBuilder('r')
+//         ->select('COUNT(r.id)')
+//         ->where('r.id NOT IN (
+//             SELECT c.reclamation_id FROM App\Entity\Commentaire c
+//         )')
+//         ->getQuery()
+//         ->getSingleScalarResult();
+// }
+
+
+
+public function Findrec()
+{
+    $entityManager=$this->getEntityManager();
+    $query=$entityManager->createQuery("select r from App\Entity\Reclamation r ");
+    return $query->getResult();
+}
+
+
+
 }

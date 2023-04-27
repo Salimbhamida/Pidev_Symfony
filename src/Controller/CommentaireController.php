@@ -17,10 +17,11 @@ use App\Repository\ReclamationRepository;
 
 use Symfony\Component\Validator\Constraints\DateTime;
 class CommentaireController extends AbstractController
-{
+{ 
     #[Route('/commentaire', name: 'app_commentaire')]
     public function index(): Response
-    {
+    {   
+     
         return $this->render('commentaire/index.html.twig', [
             'controller_name' => 'CommentaireController',
         ]);
@@ -43,6 +44,7 @@ class CommentaireController extends AbstractController
         $commentaire->setDateC($date);
         $em=$doctrine->getManager();
         $em->persist($commentaire);
+        $repository->sms('+21653515237',$commentaire->getDescriptionC(),$commentaire->getDateC());
         $em->flush();
         return $this->redirectToRoute('list_com');
       }
@@ -59,6 +61,7 @@ class CommentaireController extends AbstractController
                 'commentaire' => $commentaires,
             ]);
         }
+    
     
     
            #[Route('/delete_com/{id}', name: 'delete_Com')]

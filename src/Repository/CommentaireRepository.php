@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\Commentaire;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Twilio\Rest\Client;
+
 
 /**
  * @extends ServiceEntityRepository<Commentaire>
@@ -63,4 +66,29 @@ class CommentaireRepository extends ServiceEntityRepository
 //            ->getOneOrNullResult()
 //        ;
 //    }
+
+public  function sms(string $ss, string $msg, DateTime $dd){
+    // Your Account SID and Auth Token from twilio.com/console
+            $sid = 'AC00aec34c479eac1a92228c238b613295';
+            $auth_token = '9eeb38a4bb12e019af092562460917ab';
+    // In production, these should be environment variables. E.g.:
+    // $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
+    // A Twilio number you own with SMS capabilities
+            $twilio_number = "+12762849300";
+    
+            $client = new Client($sid, $auth_token);
+            $client->messages->create(
+            // the number you'd like to send the message to
+                $ss,
+                [
+                    // A Twilio phone number you purchased at twilio.com/console
+                    'from' => '+15074195292',
+                    // the body of the text message you'd like to send
+                    'body' => $msg.' '.$dd->format('Y-m-d H:i:s')
+                ]
+            );
+        }
+
+
+
 }
