@@ -56,7 +56,7 @@ class ServicesController extends AbstractController
     {
         $nomservice = $request->request->get('nomservice');
 
-        // Utiliser le Query Builder pour effectuer la recherche
+        
         $queryBuilder = $entityManager->createQueryBuilder();
         $queryBuilder->select('s')
             ->from('App\Entity\Services', 's')
@@ -74,7 +74,6 @@ class ServicesController extends AbstractController
             ];
         }
 
-        // Retourner les résultats sous forme de JsonResponse
         $response = new JsonResponse(['services' => $servicesArray]);
         
         return $response;

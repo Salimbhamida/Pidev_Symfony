@@ -14,7 +14,24 @@ use Symfony\Component\Routing\Annotation\Route;
 use Doctrine\ORM\EntityRepository;
 use App\Repository\CategoriesRepository;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Dompdf\Dompdf;
+use Endroid\QrCode\Writer\PngWriter;
+use Symfony\Component\HttpFoundation\ResponseHeaderBag;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 
+
+use Endroid\QrCode\Color\Color;
+use Endroid\QrCode\Encoding\Encoding;
+use Endroid\QrCode\ErrorCorrectionLevel\ErrorCorrectionLevelLow;
+use Endroid\QrCode\QrCode;
+use Endroid\QrCode\Label\Label;
+use Endroid\QrCode\Logo\Logo;
+
+use Endroid\QrCode\Label\Font\NotoSans;
+use Swift_Mailer;
+use Swift_Message;
 
 #[Route('/categories')]
 class CategoriesController extends AbstractController
@@ -55,6 +72,162 @@ class CategoriesController extends AbstractController
         ]);
     }
 
+  
+    #[Route('/pdfcat', name: 'pdf')]
+    public function generatePdf(Request $request): Response
+    {
+       
+        $desc = $request->request->get('desc');
+    
+        
+        $html = '
+            <html>
+            <head>
+                <style>
+                    .blue-title {
+                        color: blue;
+                        font-size: 24px;
+                    }
+                    .red-title {
+                        color: red;
+                        font-size: 36px;
+                    }
+                    .subtitle {
+                        font-size: 18px;
+                    }
+                </style>
+            </head>
+            <body>
+            <img src="" alt="Image description">
+                <h1 class="red-title">Reservation Freelancer</h1>
+                <h2 class="blue-title">Application tn-job</h2>
+                <h3 class="subtitle">Description de la tâche</h3>
+                <div>'.$desc.'</div>
+            </body>
+            </html>';
+    
+        
+        $dompdf = new Dompdf();
+        $dompdf->loadHtml($html);
+        $dompdf->setPaper('A4', 'portrait');
+        $dompdf->render();
+    
+      
+        $pdfContent = $dompdf->output();
+        $response = new Response();
+        $response->setContent($pdfContent);
+        $response->headers->set('Content-Type', 'application/pdf');
+    
+       
+        $disposition = $response->headers->makeDisposition(
+            ResponseHeaderBag::DISPOSITION_ATTACHMENT,
+            'reservation.pdf'
+        );
+        $response->headers->set('Content-Disposition', $disposition);
+    
+        return $response;
+    }
+
+
+
+
+    #[Route('/mailcat', name: 'mail')]
+    public function sendEmail(MailerInterface $mailer): Response
+    {
+        
+
+      
+        $email = (new Email())
+            ->from('tn-job-plateforme@gmail.com')
+            ->to('freelancerthamer@example.com')
+            ->subject('Reservation freelancer')
+     
+            ->html('<p>bonjour je souhaite de te reserver pour une tache dev mobile salaire 1000d , cordiallement</p>')
+            ->attachFromPath('C:\Users\lenovo\Desktop\tn-job-desc1.pdf', 'res.pdf');
+        
+        $mailer->send($email);
+        
+
+        
+
+        return $this->redirectToRoute('app_services_front', [], Response::HTTP_SEE_OTHER);
+    }
+
+
+
+
+
+
+
+
+
+
+    
+
+    #[Route('/qr-codes', name: 'app_qr_codes'  )]
+    public function qrcode(Request $request)
+    {
+        $desc = $request->request->get('desc');
+
+        $writer = new PngWriter();
+   
+        $qrCode = QrCode::create('qr')
+            ->setEncoding(new Encoding('UTF-8'))
+            ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+            ->setSize(120)
+            ->setMargin(0)
+            ->setForegroundColor(new Color(0, 0, 0))
+            ->setBackgroundColor(new Color(255, 255, 255));
+      
+        $label = Label::create('bonjour')->setFont(new NotoSans(8));
+ 
+        $qrCodes = [];
+       
+        $qrCodes['simple'] = $writer->write(
+                                $qrCode,
+                                null,
+                                $label->setText('QR-code reservation')
+                            )->getDataUri();
+ 
+        return $this->render('categories/qr.html.twig', $qrCodes );
+    }
+
+
+   
+
+
+
+
+    #[Route('/recherche/categorie', name: 'recherchecategorie' )]
+    public function rechercheService(request $request, EntityManagerInterface $entityManager)
+    {
+        $nomcategorie = $request->request->get('nomcategorie');
+
+        
+        $queryBuilder = $entityManager->createQueryBuilder();
+        $queryBuilder->select('s')
+            ->from('App\Entity\Categories', 's')
+            ->where('s.nomCategorie LIKE :nomcategorie')
+            ->setParameter('nomcategorie', '%' . $nomcategorie . '%');
+
+        $categories = $queryBuilder->getQuery()->getResult();
+
+        $categoriesArray = [];
+        foreach ($categories as $categorie) {
+            $categoriesArray[] = [
+                'id' => $categorie->getIdCategorie(),
+                'nomcategorie' => $categorie->getNomCategorie(),
+                'nbtotfreelance' => $categorie->getNbTotService()
+            ];
+        }
+
+        $response = new JsonResponse(['categories' => $categoriesArray]);
+        
+        return $response;
+    }
+
+
+
 
     #[Route('/trie', name: 'trier_categorie', methods: ['GET'])]
     public function trier_services(EntityManagerInterface $em)
@@ -90,7 +263,7 @@ class CategoriesController extends AbstractController
     }
 
     #[Route('/categoriedetail/{idCategorie}', name: 'app_categories_categoriedetail', methods: ['GET'])]
-    public function index2(EntityManagerInterface $entityManager , $idCategorie): Response
+    public function index2(EntityManagerInterface $entityManager , $idCategorie , Request $request): Response
     {
         $categories = $entityManager
             ->getRepository(Categories::class)
@@ -100,11 +273,46 @@ class CategoriesController extends AbstractController
             $freelancers = $entityManager
             ->getRepository(User::class)
             ->findAll();
+
+
+
+            $desc = $request->request->get('desc');
+
+            $writer = new PngWriter();
+       
+            $qrCode = QrCode::create('ggg')
+                ->setEncoding(new Encoding('UTF-8'))
+                ->setErrorCorrectionLevel(new ErrorCorrectionLevelLow())
+                ->setSize(120)
+                ->setMargin(0)
+                ->setForegroundColor(new Color(0, 0, 0))
+                ->setBackgroundColor(new Color(255, 255, 255));
+          
+            $label = Label::create('bonjour')->setFont(new NotoSans(8));
+     
+           
+           
+            $simple = $writer->write(
+                                    $qrCode,
+                                    null,
+                                    $label->setText('QR-code reservation')
+                                )->getDataUri();
+     
+
+
+
+
+
+    
+
+        
         return $this->render('categories/categoriedetail.html.twig', [
             'categories' => $categories,
             'freelancers' => $freelancers,
+            'simple' => $simple,
+            
 
-        ]);
+        ] );
     }
 
 
