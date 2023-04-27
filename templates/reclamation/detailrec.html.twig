@@ -40,8 +40,10 @@
 <div class="form-group">
                           {#
                         <button class="btn btn-primary"><a href="{{ path('form_C') }}">ajouter</a></button> #}
-                            <button class="btn btn-primary"><a href="{{ path('delete_C',{'id':Reclamation.id}) }}">supprimer</a></button>
-                             <button class="btn btn-primary"><a href="{{ path('updateReclmation',{'id':Reclamation.id}) }}">modifier</a></button>
+                     <a href="{{ path('delete_C',{'id':Reclamation.id}) }}" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                          
+
+                      <a href="{{ path('updateReclmation',{'id':Reclamation.id}) }}"class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a> 
 
                         </div>
 </ul>

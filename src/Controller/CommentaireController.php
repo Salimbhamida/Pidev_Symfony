@@ -28,11 +28,12 @@ class CommentaireController extends AbstractController
     }
 
 
-    #[Route('/addcom', name: 'form_Com')]
-    public function Addcommentaire(HttpFoundationRequest $request, ManagerRegistry $doctrine): Response
+    #[Route('/addcom/{id}', name: 'form_Com')]
+    public function Addcommentaire(HttpFoundationRequest $request, ManagerRegistry $doctrine,$id): Response
     {  
         $repository= $doctrine->getRepository(Commentaire::class);
-
+        $rep= $doctrine->getRepository(Reclamation::class);
+        $rec= $rep->find($id);
       $commentaire=new Commentaire;
       $form=$this->createForm(CommentaireType::class, $commentaire);
      // $form->add('add', SubmitType::class);
@@ -42,6 +43,7 @@ class CommentaireController extends AbstractController
       {
         $date = new \DateTime();
         $commentaire->setDateC($date);
+        $commentaire->setReclamation($rec);
         $em=$doctrine->getManager();
         $em->persist($commentaire);
         $repository->sms('+21653515237',$commentaire->getDescriptionC(),$commentaire->getDateC());

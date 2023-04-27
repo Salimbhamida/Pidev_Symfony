@@ -70,7 +70,7 @@ class CommentaireRepository extends ServiceEntityRepository
 public  function sms(string $ss, string $msg, DateTime $dd){
     // Your Account SID and Auth Token from twilio.com/console
             $sid = 'AC00aec34c479eac1a92228c238b613295';
-            $auth_token = '9eeb38a4bb12e019af092562460917ab';
+            $auth_token = '3529cc050cae9a1e5f6b9c5be1b665eb';
     // In production, these should be environment variables. E.g.:
     // $auth_token = $_ENV["TWILIO_AUTH_TOKEN"]
     // A Twilio number you own with SMS capabilities
@@ -84,7 +84,7 @@ public  function sms(string $ss, string $msg, DateTime $dd){
                     // A Twilio phone number you purchased at twilio.com/console
                     'from' => '+15074195292',
                     // the body of the text message you'd like to send
-                    'body' => $msg.' '.$dd->format('Y-m-d H:i:s')
+                    'body' =>'description: '. $msg.' date: '.$dd->format('Y-m-d H:i')
                 ]
             );
         }

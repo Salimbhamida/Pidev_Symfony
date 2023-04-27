@@ -32,13 +32,13 @@ class CommentaireType extends AbstractType
                 'rows' => 5,
             ],
         ])
-            ->add('reclamation',EntityType::class,[
-                'class'=>Reclamation::class,
-                'choice_label'=>'Id',
-                'multiple'=>false,
-                'expanded'=>false,
-            ])
-        ;
+        //     ->add('reclamation',EntityType::class,[
+        //         'class'=>Reclamation::class,
+        //         'choice_label'=>'Id',
+        //         'multiple'=>false,
+        //         'expanded'=>false,
+        //     ])
+         ;
     }
 
     public function configureOptions(OptionsResolver $resolver): void
