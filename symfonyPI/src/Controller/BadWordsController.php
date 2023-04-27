@@ -9,10 +9,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class BadWordsController extends AbstractController
 {
     private $dictionary = array(
-        "kakawia",
-        "homs",
-        array("louz", "kloub"),
-        "bondok"
+        "chien",
+        "chat",
+        array("elephant", "girafe"),
+        "souris"
     );
 
     private $text;

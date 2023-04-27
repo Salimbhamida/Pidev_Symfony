@@ -85,7 +85,7 @@ class HomeController extends AbstractController
             $demandes = $paginator->paginate(
                 $query, // Requête contenant les données à paginer
                 $request->query->getInt('page', 1), // Numéro de la page en cours, 1 par défaut
-                10); // Nombre de résultats par page
+                20); // Nombre de résultats par page
         } 
 
 
@@ -105,7 +105,7 @@ class HomeController extends AbstractController
             $demandes =  $paginator->paginate(
                 $query, // Requête contenant les données à paginer
                 $request->query->getInt('page', 1), // Numéro de la page en cours, 1 par défaut
-                10); // Nombre de résultats par page
+                20); // Nombre de résultats par page
         }else{
 
             $queryBuilder = $demandeRepository->createQueryBuilder('d');

@@ -39,9 +39,9 @@ class PosteController extends AbstractController
         $form->handleRequest($request);
             //
         $myDictionary = array(
-            "louz", "kloub", "homs","bondok",
+            "chien", "chat", "elephant","girafe",
             
-            "kakawia"
+            "souris"
         );
         dump($request);
         //
