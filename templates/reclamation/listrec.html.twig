@@ -23,9 +23,22 @@
           <div class="card">
             <div class="card-body">
               <h5 class="card-title">Reclamations</h5>
+              {% for reclamation in app.flashes('info') %}
+                        <div class="alert alert-success">
+                            {{ reclamation }}
+                            </div>
+                            {% endfor %}
               <p> <a href="https://github.com/fiduswriter/Simple-DataTables" target="_blank"></a>  <code></code> </p>
+{{ form_start(form) }}
+<div class="input-group">
+    {{ form_widget(form.searchedby, { 'attr': { 'class': 'form-control' } }) }}
+    <div class="input-group-append">
+        {{ form_widget(form.search, { 'attr': { 'class': 'btn btn-primary' } }) }}
+    </div>
+</div>
+{{ form_end(form) }}
 
-{{form(form)}}
+
 
               <!-- Table with stripped rows -->
               <table class="table datatable">
@@ -58,6 +71,8 @@
         {% endfor %}
         </tbody>
     </table>
+<button class="btn btn-primary">{{ knp_pagination_render(reclamation) }}</button>
+
 
 
 

@@ -17,6 +17,8 @@ use Symfony\Component\Validator\Constraints\DateTime;
 use Symfony\Component\Notifier\Notification\Notification;
 use Symfony\Component\Notifier\NotifierInterface;
 
+use Knp\Component\Pager\PaginatorInterface;
+
 
 
 
@@ -68,12 +70,13 @@ class ReclamationController extends AbstractController
         $em->flush();
         return $this->redirectToRoute('form_C');
       }}
+      $this->addFlash('info', 'vous avez une nouvelle reclamation');
       return $this->renderForm('reclamation/addrec.html.twig',['formC'=>$form,'reclamation' => $reclamation]);
 
         }}
 
         #[Route('/listrec', name: 'list_rec')]
-        public function listc(Request $request, ReclamationRepository $reclamationRepository): Response
+        public function listc(Request $request, ReclamationRepository $reclamationRepository,PaginatorInterface $paginator): Response
         {
             $form = $this->createFormBuilder()
                 ->add('searchedby', TextType::class, [
@@ -98,6 +101,10 @@ class ReclamationController extends AbstractController
             } else {
                 $reclamations = $reclamationRepository->findAll();
             }
+            $reclamations = $paginator->paginate(
+                $reclamations, /* query NOT result */
+                $request->query->getInt('page', 1), /*page number*/  5 /*limit per page*/
+            );
         
             return $this->render('reclamation/listrec.html.twig', [
                 'reclamation' => $reclamations,
