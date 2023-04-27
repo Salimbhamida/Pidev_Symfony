@@ -33,12 +33,15 @@
  Ajouter un service</a>
  <div class="datatable-top">
     <div class="datatable-dropdown">
-            <label>
-                <select class="datatable-selector"><option value="5">5</option><option value="10" selected="">10</option><option value="15">15</option><option value="20">20</option><option value="25">25</option></select> entries per page
-            </label>
-        </div>
-    <div class="datatable-search">
-            <input class="datatable-input" placeholder="Search..." type="search" title="Search within table">
+
+
+          <form id="recherche-form" action="{{ path('rechercheService') }}" method="post">
+    <label for="nomservice">Nom du service :</label>
+    <input type="text" id="nomservice"  name="nomservice">
+    <button class="btn btn-primary"  type="submit"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>  Rechercher </button>
+
+
+</form>
         </div>
 </div>
               <!-- Table with stripped rows -->
@@ -85,12 +88,86 @@
         </div>
       </div>
 
-   <form id="recherche-form" action="{{ path('rechercheService') }}" method="post">
-    <label for="nomservice">Nom du service :</label>
-    <input type="text" id="nomservice" name="nomservice">
-    <button type="submit">Rechercher</button>
-</form>
+  
 
+  <div class="card">
+            <div class="filter">
+              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                <li class="dropdown-header text-start">
+                  <h6>Filter</h6>
+                </li>
+
+                <li><a class="dropdown-item" href="#">Today</a></li>
+                <li><a class="dropdown-item" href="#">This Month</a></li>
+                <li><a class="dropdown-item" href="#">This Year</a></li>
+              </ul>
+            </div>
+
+            <div class="card-body pb-0">
+              <h5 class="card-title">Graphe de services <span>| TN-job</span></h5>
+
+              <div id="trafficChart" style="min-height: 400px;" class="echart"></div>
+
+        <script>
+  var services; 
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/services/recherche/service', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      services = response.services; 
+      console.log(response.services);
+
+      var data = []; 
+
+     
+      for (var i = 0; i < services.length; i++) {
+        var service = services[i];
+        var item = {
+          value: service.nbtotfreelance,
+          name: service.nomservice + ' (' + service.id + ')'
+        };
+        data.push(item); 
+      }
+
+      
+      echarts.init(document.querySelector("#trafficChart")).setOption({
+        tooltip: {
+          trigger: 'item'
+        },
+        legend: {
+          top: '5%',
+          left: 'center'
+        },
+        series: [{
+          name: 'Access From',
+          type: 'pie',
+          radius: ['40%', '70%'],
+          avoidLabelOverlap: false,
+          label: {
+            show: false,
+            position: 'center'
+          },
+          emphasis: {
+            label: {
+              show: true,
+              fontSize: '18',
+              fontWeight: 'bold'
+            }
+          },
+          labelLine: {
+            show: false
+          },
+          data: data 
+        }]
+      });
+    }
+  };
+  xhr.send(); 
+</script>
 
 
 
