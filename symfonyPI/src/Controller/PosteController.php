@@ -11,6 +11,8 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Snappy\Pdf;
+use Symfony\Component\Notifier\Notification\Notification;
+use Symfony\Component\Notifier\NotifierInterface;
 
 #[Route('/poste')]
 class PosteController extends AbstractController
@@ -28,19 +30,44 @@ class PosteController extends AbstractController
     }
 
     #[Route('/new/{idDemande}', name: 'app_poste_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager,$idDemande , DemandeRepository $repo): Response
+    public function new(Request $request, EntityManagerInterface $entityManager,$idDemande , DemandeRepository $repo,NotifierInterface $notifier): Response
     {
         $poste = new Poste();
         $Demande=$repo->findById($idDemande);
         $poste->setIdDemande($Demande);
         $form = $this->createForm(PosteType::class, $poste);
         $form->handleRequest($request);
+            //
+        $myDictionary = array(
+            "louz", "kloub", "homs","bondok",
+            
+            "kakawia"
+        );
+        dump($request);
+        //
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $entityManager->persist($poste);
-            $entityManager->flush();
 
-            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER);
+
+            //
+            $myText = $request->get("poste")['description'];
+            
+            $badwords = new BadWordsController();
+            $badwords->setDictionaryFromArray($myDictionary)->setText($myText);
+            $check = $badwords->check();
+            dump($check);
+            
+                if ($check){
+                    $notifier->send(new Notification('Mauvais mot ', ['browser']));} 
+                else {
+
+                    $entityManager->persist($poste);
+                    $entityManager->flush();
+
+            return $this->redirectToRoute('app_home', [], Response::HTTP_SEE_OTHER); 
+        }
+
+
         }
 
         return $this->renderForm('poste/new.html.twig', [

@@ -77,7 +77,30 @@
       <script>
         document.addEventListener("DOMContentLoaded", () => {
           // Group the demandes by nomRecruteur
-          let demandesByRecruteur = {{ demandes|reduce((acc, demande) => acc|merge({(demande.nomRecruteur): [demande]|length}), {})|json_encode|raw }};
+           //let demandesByRecruteur = {{ demandes|reduce((acc, demande) => acc|merge({(demande.nomRecruteur): [demande]|length}), {})|json_encode|raw }};
+           
+           // var demandesArray = JSON.parse('{{ demandes|json_encode()|raw }}');
+        let demandesByRecruteur = {};
+        {% for demande in demandes %}
+            if ("{{ demande.nomRecruteur }}" in demandesByRecruteur) {
+                demandesByRecruteur["{{ demande.nomRecruteur }}"] += 1;
+            } else {
+                demandesByRecruteur["{{ demande.nomRecruteur }}"] = 1;
+            }
+        {% endfor %}
+
+  
+ 
+           
+
+
+
+
+
+
+
+
+
 
          /* {% for demande in demandes %}
       if(demande.nomRecruteur in demandesByRecruteur){
@@ -102,7 +125,14 @@
                 backgroundColor: [
                   'rgb(255, 99, 132)',
                   'rgb(54, 162, 235)',
-                  'rgb(255, 205, 86)'
+                  'rgb(255, 205, 86)' ,
+                  'rgb(75, 192, 192)',
+                  'rgb(153, 102, 255)',
+                  'rgb(255, 159, 64)',
+                  'rgb(255, 0, 0)',
+                  'rgb(0, 255, 0)',
+                  'rgb(0, 0, 255)',
+                  'rgb(128, 128, 128)'
                 ],
                 hoverOffset: 4
               }]
