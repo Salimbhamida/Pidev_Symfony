@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "select2": "^4.1.0-rc.0"
+  },
+  "devDependencies": {
+    "@hotwired/stimulus": "^3.0.0",
+    "@symfony/ux-autocomplete": "file:../../DESKTOP/PIDEV2/vendor/symfony/ux-autocomplete/assets",
+    "tom-select": "^2.2.2"
+  }
+}

@@ -8,7 +8,6 @@
     <table class="table">
         <thead>
             <tr>
-                <th>IdExp</th>
                 <th>NomEntreprise</th>
                 <th>Poste</th>
                 <th>DateDebut</th>
@@ -19,7 +18,6 @@
         <tbody>
         {% for experience in experiences %}
             <tr>
-                <td>{{ experience.idExp }}</td>
                 <td>{{ experience.nomEntreprise }}</td>
                 <td>{{ experience.poste }}</td>
                 <td>{{ experience.dateDebut ? experience.dateDebut|date('Y-m-d') : '' }}</td>

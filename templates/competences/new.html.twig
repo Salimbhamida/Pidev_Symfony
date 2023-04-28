@@ -1,9 +1,24 @@
-
+{% extends 'base.html.twig' %}
 
 {% block body %}
-    <h1>Create new Competences</h1>
+    <h1>Competences</h1>
 
     {{ include('competences/_form.html.twig') }}
 
-    <a href="{{ path('app_competences_index') }}">back to list</a>
+    <a href="{{ path('app_experiences_new') }}">Next </a>
+
+
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}
+
+{% block javascript %}
+<script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script>
+
+</script>
 {% endblock %}

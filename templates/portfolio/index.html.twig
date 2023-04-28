@@ -1,0 +1,199 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}PORTFOLIO{% endblock %}
+{% block javascript %}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/js/lightbox.min.js"></script>
+{% endblock%}
+{% block body %}
+
+    <div class="row">
+    {% for photo in photos %}
+        <div class="col-md-4">
+        <h2>Votre Protfolio</h2>
+            <div class="card mb-6">
+                <div class="row no-gutters">
+                    <div class="col-md-6">
+                        <img src="{{ asset('uploads/image_profile/' ~ photo.photo) }}" class="img-thumbnail" alt="Photo">
+                    </div>
+                    <div class="col-md-7">
+                        <div class="card-body">
+                            <a href="{{ path('app_photo_edit', {'id': photo.id}) }}" class="btn btn-primary"> edit</a>
+                        </div>
+                        <div class="card-body">
+                           <a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://127.0.0.1:8000/portfolio/visit" class="btn btn-info" alt="QR Code"qrcode"><button>Partager QR code</button></a>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    {% endfor %}
+</div>
+
+<button id='btnSpeak' class="badge badge-info">Click Me</button>
+
+    <div class="row">
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                <h2>Liste des compétences </h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for competence in competences %}
+                                <tr>
+                                    <td>{{ competence.nom }}</td>
+                                    <td>
+                                        <a href="{{ path('app_competences_edit', {'idComp': competence.idComp}) }}">Modifier</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="2">Aucun enregistrement trouvé</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{{ path('app_competences_new') }}" class="btn btn-primary">Ajouter une compétence</a>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h2>Liste des expériences professionnelles</h2>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Nom de l'entreprise</th>
+                                <th>Poste</th>
+                                <th>Date de début</th>
+                                <th>Date de fin</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for experience in experiences %}
+                                <tr>
+                                    <td>{{ experience.nomEntreprise }}</td>
+                                    <td>{{ experience.poste }}</td>
+                                    <td>{{ experience.dateDebut ? experience.dateDebut|date('Y-m-d') : '' }}</td>
+                                    <td>{{ experience.dateFin ? experience.dateFin|date('Y-m-d') : '' }}</td>
+                                    <td>
+                                        <a href="{{ path('app_experiences_edit', {'idExp': experience.idExp}) }}">Modifier</a>
+                                    </td>
+                                </tr>
+                            {% else %}
+                                <tr>
+                                    <td colspan="5">Aucun enregistrement trouvé</td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    <a href="{{ path('app_experiences_new') }}" class="btn btn-primary">Ajouter une expérience</a>
+                    </div>
+            </div>
+        </div>
+        </div>
+        <div class="row">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                     <h1>Scolarité</h1>
+                    <table class="table">
+                         <thead>
+                            <tr>
+                                <th>Nom de l'établissement</th>
+                                <th>Ville</th>
+                                <th>Pays</th>
+                                <th>Diplôme</th>
+                                <th>Date d'obtention</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for scolarite in scolarites %}
+                                <tr>
+                                    <td>{{ scolarite.nomEtablissement }}</td>
+                                    <td>{{ scolarite.ville }}</td>
+                                    <td>{{ scolarite.pays }}</td>
+                                    <td>{{ scolarite.diplome }}</td>
+                                    <td>{{ scolarite.dateObtention ? scolarite.dateObtention|date('Y-m-d') : ''}}</td>
+
+                <td>
+                    <a href="{{ path('app_scolarite_edit', {'idEtab': scolarite.idEtab}) }}">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <a href="{{ path('app_scolarite_new') }}" class="btn btn-primary">Ajouter  education</a>
+                    </div>
+            </div>
+        </div>
+        </div>
+
+<select id='voiceList' hidden>
+
+            </select> <br><br>
+
+
+            
+
+            <script>
+
+                var voiceList = document.querySelector('#voiceList');
+                var btnSpeak = document.querySelector('#btnSpeak');
+                var synth = window.speechSynthesis;
+                var voices = [];
+
+                PopulateVoices();
+                if(speechSynthesis !== undefined){
+                    speechSynthesis.onvoiceschanged = PopulateVoices;
+                }
+
+                btnSpeak.addEventListener('click', ()=> {
+                    var txtInput= ("Welcome  to your portfolio");
+                    var toSpeak = new SpeechSynthesisUtterance(txtInput);
+                    var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
+                    voices.forEach((voice)=>{
+                        if(voice.name === selectedVoiceName){
+                            toSpeak.voice = voice;
+                        }
+                    });
+                    synth.speak(toSpeak);
+                });
+
+                function PopulateVoices(){
+                    voices = synth.getVoices();
+                    var selectedIndex = voiceList.selectedIndex < 0 ? 6 : voiceList.selectedIndex;
+                    voiceList.innerHTML = '';
+                    voices.forEach((voice)=>{
+                        var listItem = document.createElement('option');
+                        listItem.textContent = voice.name;
+                        listItem.setAttribute('data-lang', voice.lang);
+                        listItem.setAttribute('data-name', voice.name);
+                        voiceList.appendChild(listItem);
+                    });
+
+                    voiceList.selectedIndex = selectedIndex;
+                }
+            </script>
+
+{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/lightbox2/2.11.3/css/lightbox.min.css">
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+{% endblock %}

@@ -3,16 +3,38 @@
 namespace App\Controller;
 
 use App\Entity\Scolarite;
+use App\Repository\ScolariteRepository;
 use App\Form\ScolariteType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpClient\HttpClient;
+use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 
 #[Route('/scolarite')]
 class ScolariteController extends AbstractController
-{
+{   
+    #[Route('/pays-suggestions', name: 'app_pays_suggestions', methods: ['GET'])]
+    public function paysSuggestions(Request $request): JsonResponse
+    {
+        $searchTerm = $request->query->get('q');
+
+        // Replace this with your code to retrieve the list of suggestions based on the search term
+        $suggestions = [
+            ['id' => 'FR', 'text' => 'France'],
+            ['id' => 'US', 'text' => 'United States'],
+            ['id' => 'CA', 'text' => 'Canada'],
+            // ...
+        ];
+
+        return $this->json(['results' => $suggestions]);
+    }
+
     #[Route('/', name: 'app_scolarite_index', methods: ['GET'])]
     public function index(EntityManagerInterface $entityManager): Response
     {
@@ -29,14 +51,16 @@ class ScolariteController extends AbstractController
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
         $scolarite = new Scolarite();
-        $form = $this->createForm(ScolariteType::class, $scolarite);
+        $form = $this->createForm(ScolariteType::class, $scolarite,[
+        ]);
+        
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($scolarite);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_scolarite_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_scolarite_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('scolarite/new.html.twig', [
@@ -81,4 +105,13 @@ class ScolariteController extends AbstractController
 
         return $this->redirectToRoute('app_scolarite_index', [], Response::HTTP_SEE_OTHER);
     }
+
+    // #[Route('/pays', name: 'app_pays', methods: ['GET'])]
+    // public function findPays(ScolariteRepository $scolariteRepository, Request $requset ): Response
+    // {
+    //     $serached_term = $request->query->get('');
+    //     dd($serached_term);
+    //     $pays=$scolariteRepository->findByPays($serached_term);
+    //     new Response('');
+    // }
 }

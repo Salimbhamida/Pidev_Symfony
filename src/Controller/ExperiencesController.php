@@ -36,7 +36,7 @@ class ExperiencesController extends AbstractController
             $entityManager->persist($experience);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_experiences_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_experiences_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('experiences/new.html.twig', [

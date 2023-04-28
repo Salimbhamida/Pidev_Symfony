@@ -12,6 +12,8 @@
         "doctrine/doctrine-bundle": "^2.9",
         "doctrine/doctrine-migrations-bundle": "^3.2",
         "doctrine/orm": "^2.14",
+        "fzaninotto/faker": "^1.5",
+        "select2/select2": "^4.0",
         "sensio/framework-extra-bundle": "^6.2",
         "symfony/asset": "5.4.*",
         "symfony/console": "5.4.*",
@@ -20,9 +22,14 @@
         "symfony/flex": "^1.17|^2",
         "symfony/form": "5.4.*",
         "symfony/framework-bundle": "5.4.*",
+        "symfony/http-client": "5.4.*",
+        "symfony/http-client-contracts": "^2.5",
+        "symfony/mime": "5.4.*",
         "symfony/runtime": "5.4.*",
+        "symfony/security-bundle": "5.4.*",
         "symfony/security-csrf": "5.4.*",
         "symfony/twig-bundle": "5.4.*",
+        "symfony/ux-autocomplete": "^2.7",
         "symfony/validator": "5.4.*",
         "symfony/yaml": "5.4.*"
     },
@@ -76,6 +83,7 @@
         }
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/maker-bundle": "*"
     }
 }

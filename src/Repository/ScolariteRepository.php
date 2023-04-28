@@ -39,6 +39,17 @@ class ScolariteRepository extends ServiceEntityRepository
         }
     }
 
+       public function findByPays($value): array
+   {
+       return $this->createQueryBuilder('s')
+           ->andWhere('s.pays = :val')
+           ->setParameter('val', $value."%")
+           ->setMaxResults(30)
+           ->getQuery()
+           ->getResult()
+       ;
+   }
+
 //    /**
 //     * @return Scolarite[] Returns an array of Scolarite objects
 //     */

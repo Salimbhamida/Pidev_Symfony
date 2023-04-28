@@ -19,24 +19,36 @@ class Scolarite
 
     
     #[ORM\Column(length:11)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max:100)]
+
     private ?string $nomEtablissement=null;
 
  
-    #[ORM\Column( length:30)]
+    #[ORM\Column(length:30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max:30)]
     
     private  ?string  $ville=null;
 
 
-     #[ORM\Column(length:30)]
+    #[ORM\Column(length:30)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max:30)]
+
     private  ?string $pays=null;
 
 
-      #[ORM\Column(length:50)]
+    #[ORM\Column(length:50)]
+    #[Assert\NotBlank]
+    #[Assert\Length(max:50)]
 
     private  ?string $diplome=null;
 
     #[ORM\Column()]
+    #[Assert\NotBlank]
     #[Assert\LessThanOrEqual("today")]
+    
     private ?\DateTime $dateObtention;
 
     public function getIdEtab(): ?int
@@ -51,11 +63,7 @@ class Scolarite
 
     public function setNomEtablissement(string $nomEtablissement): self
     {
-        
-        $regex = '/^[a-zA-Z\s]*$/';
-    if (strlen($nomEtablissement) > 50 || !preg_match($regex, $nomEtablissement)) {
-        throw new \InvalidArgumentException('Le nom est invalide.');
-    }
+
         $this->nomEtablissement = $nomEtablissement;
 
 
@@ -70,10 +78,6 @@ class Scolarite
 
     public function setVille(string $ville): self
     {
-        $regex = '/^[a-zA-Z\s]*$/';
-    if (strlen($ville) > 50 || !preg_match($regex, $ville)) {
-        throw new \InvalidArgumentException('Le nom est invalide.');
-    }
 
         $this->ville = $ville;
 
@@ -89,10 +93,6 @@ class Scolarite
     public function setPays(string $pays): self
     {
         
-        $regex = '/^[a-zA-Z\s]*$/';
-    if (strlen($pays) > 50 || !preg_match($regex, $nom)) {
-        throw new \InvalidArgumentException('Le nom est invalide.');
-    }
         $this->pays = $pays;
 
 
@@ -106,11 +106,6 @@ class Scolarite
 
     public function setDiplome(string $diplome): self
     {
-
-        $regex = '/^[a-zA-Z\s]*$/';
-    if (strlen($diplome) > 50 || !preg_match($regex, $diplome)) {
-        throw new \InvalidArgumentException('Le nom est invalide.');
-    }
         $this->diplome = $diplome;
 
         return $this;

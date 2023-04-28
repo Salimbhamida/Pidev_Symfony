@@ -39,6 +39,12 @@ class CompetenceRepository extends ServiceEntityRepository
         }
     }
 
+    public function findAllQueryBuilder()
+    {
+        return $this->createQueryBuilder('c')
+            ->orderBy('c.nom', 'ASC');
+    }
+
 //    /**
 //     * @return Competences[] Returns an array of Competences objects
 //     */

@@ -1,11 +1,26 @@
+
 {% extends 'base.html.twig' %}
 
-{% block title %}New Scolarite{% endblock %}
-
 {% block body %}
+
     <h1>Education</h1>
 
     {{ include('scolarite/_form.html.twig') }}
 
-    <a href="{{ path('app_scolarite_index') }}">back to list</a>
+    <a href="{{ path('app_user_new') }}">Next</a>
+{% endblock %}
+{% block stylesheets %}
+<link href="{{ asset('node_modules\select2\dist\css\select2.min.css') }}" rel="stylesheet" />
+{{ parent() }}
+
+{% endblock %}
+
+{% block javascript %}
+{{ parent() }}
+
+<script src="{{ asset('node_modules\jquery\dist\jquery.min.js') }}"></script>  
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+  <script>
+  
+</script>
 {% endblock %}

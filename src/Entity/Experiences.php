@@ -20,21 +20,37 @@ class Experiences
 
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message:"Le nom de l'entreprise ne peut pas être vide.")]
+    #[Assert\Length(max:100, maxMessage:"Le nom de l'entreprise ne peut pas dépasser {{ limit }} caractères.")]
+    #[Assert\Regex(pattern:"/^[a-zA-Z0-9\s\-]*$/", message:"Le nom de l'entreprise n'est pas valide.")]
+    
     
     private ?string $nomEntreprise;
 
 
     #[ORM\Column(length:255)]
+    #[Assert\NotBlank(message:"Le poste ne peut pas être vide.")]
+    #[Assert\Length(max:100, maxMessage:"Le poste ne peut pas dépasser {{ limit }} caractères.")]
+    #[Assert\Regex(pattern:"/^[a-zA-Z0-9\s\-]*$/", message:"Le nom du poste n'est pas valide.")]
+    
     
     private ?string  $poste;
 
  
-     #[ORM\Column(type:'date')]
-     #[Assert\LessThanOrEqual("today")]
+    #[ORM\Column(type:'date')]
+    #[Assert\LessThanOrEqual("today", message:"La date de début doit être antérieure ou égale à aujourd'hui.")]
+    #[Assert\NotNull(message:"La date de début ne peut pas être vide.")]
+    
+    
     private ?\DateTime $dateDebut;
 
 
     #[ORM\Column(type:'date')]
+    #[Assert\NotNull(message:"La date de fin ne peut pas être vide.")]
+    #[Assert\Expression(
+        "value >= this.getDateDebut()",
+        message:"La date de fin doit être postérieure ou égale à la date de début."
+    )]
     
     private ?\DateTime $dateFin;
 
@@ -52,10 +68,6 @@ class Experiences
 
     public function setNomEntreprise(string $nomEntreprise): self
     {   
-        $regex = '/^[a-zA-Z0-9\s\-]*$/';
-    if (strlen($nomEntreprise) > 100 || !preg_match($regex, $nomEntreprise)) {
-        throw new \InvalidArgumentException('Le nom de l\'entreprise est invalide.');
-    }
 
         $this->nomEntreprise = $nomEntreprise;
 
@@ -69,10 +81,6 @@ class Experiences
 
     public function setPoste(string $poste): self
     {
-        $regex = '/^[a-zA-Z0-9\s\-]*$/';
-        if (strlen($poste) > 100 || !preg_match($regex, $poste)) {
-            throw new \InvalidArgumentException('Le nom de poste est invalide.');
-        }
         $this->poste = $poste;
 
         return $this;

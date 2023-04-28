@@ -1,11 +1,13 @@
+
 {% extends 'base.html.twig' %}
-
-{% block title %}New Experiences{% endblock %}
-
 {% block body %}
-    <h1>Create new Experiences</h1>
+    <h1>Experiences</h1>
 
     {{ include('experiences/_form.html.twig') }}
 
-    <a href="{{ path('app_experiences_index') }}">back to list</a>
+    <a href="{{ path('app_scolarite_new') }}">Next </a>
+{% endblock %}
+{% block stylesheets %}
+{{ parent() }}
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
 {% endblock %}

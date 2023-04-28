@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+
 use App\Entity\Competences;
 use App\Form\CompetencesType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -9,6 +10,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+
 
 #[Route('/competences')]
 class CompetencesController extends AbstractController
@@ -27,7 +31,8 @@ class CompetencesController extends AbstractController
 
     #[Route('/new', name: 'app_competences_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
-    {
+    {   
+
         $competence = new Competences();
         $form = $this->createForm(CompetencesType::class, $competence);
         $form->handleRequest($request);
@@ -36,7 +41,7 @@ class CompetencesController extends AbstractController
             $entityManager->persist($competence);
             $entityManager->flush();
 
-            return $this->redirectToRoute('app_competences_index', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_competences_new', [], Response::HTTP_SEE_OTHER);
         }
 
         return $this->renderForm('competences/new.html.twig', [

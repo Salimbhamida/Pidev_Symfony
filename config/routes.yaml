@@ -1,3 +1,11 @@
 #index:
 #    path: /
 #    controller: App\Controller\DefaultController::index
+ajax_get_niveau:
+    path: /ajax/get-niveau
+    methods: [POST]
+    controller: App\Controller\CompetencesController::ajaxGetNiveau
+
+pays_suggestions:
+    path: /pays-suggestions
+    controller: App\Controller\ScolariteController::paysSuggestions
