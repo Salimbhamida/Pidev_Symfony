@@ -6,6 +6,7 @@
 parameters:
  image_directory: '%kernel.project_dir%/public/uploads/image_profile'
 services:
+    
     Symfony\Contracts\HttpClient\HttpClientInterface: '@http_client'
     #  # ...
     # http_client:

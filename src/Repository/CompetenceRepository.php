@@ -16,9 +16,12 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class CompetenceRepository extends ServiceEntityRepository
 {
+
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Competences::class);
+        
     }
 
     public function save(Competences $entity, bool $flush = false): void
@@ -44,6 +47,7 @@ class CompetenceRepository extends ServiceEntityRepository
         return $this->createQueryBuilder('c')
             ->orderBy('c.nom', 'ASC');
     }
+
 
 //    /**
 //     * @return Competences[] Returns an array of Competences objects

@@ -27,46 +27,46 @@ class UserController extends AbstractController
     #[Route('/new', name: 'app_user_new', methods: ['GET', 'POST'])]
     public function new(Request $request, UserRepository $userRepository, SluggerInterface $slugger): Response
     {
-        $user = new User();
-        $form = $this->createForm(UserType::class, $user);
-        $form->handleRequest($request);
+        // $user = new User();
+        // $form = $this->createForm(UserType::class, $user);
+        // $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            /** @var UploadedFile $brochureFile */
-            $photo = $form->get('photo')->getData();
+        // if ($form->isSubmitted() && $form->isValid()) {
+        //     /** @var UploadedFile $brochureFile */
+        //     $photo = $form->get('photo')->getData();
 
-            // this condition is needed because the 'brochure' field is not required
-            // so the PDF file must be processed only when a file is uploaded
-            if ($brochureFile) {
-                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
-                // this is needed to safely include the file name as part of the URL
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
+        //     // this condition is needed because the 'brochure' field is not required
+        //     // so the PDF file must be processed only when a file is uploaded
+        //     if ($brochureFile) {
+        //         $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+        //         // this is needed to safely include the file name as part of the URL
+        //         $safeFilename = $slugger->slug($originalFilename);
+        //         $newFilename = $safeFilename.'-'.uniqid().'.'.$photo->guessExtension();
 
-                // Move the file to the directory where brochures are stored
-                try {
-                    $photo->move(
-                        $this->getParameter('image_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {
-                    // ... handle exception if something happens during file upload
-                }
+        //         // Move the file to the directory where brochures are stored
+        //         try {
+        //             $photo->move(
+        //                 $this->getParameter('image_directory'),
+        //                 $newFilename
+        //             );
+        //         } catch (FileException $e) {
+        //             // ... handle exception if something happens during file upload
+        //         }
 
-                // updates the 'brochureFilename' property to store the PDF file name
-                // instead of its contents
-                $user->setImage($newFilename);
-            }
+        //         // updates the 'brochureFilename' property to store the PDF file name
+        //         // instead of its contents
+        //         $user->setImage($newFilename);
+        //     }
 
-            $userRepository->save($user, true);
+        //     $userRepository->save($user, true);
 
-            return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
-        }
+        //     return $this->redirectToRoute('app_user_index', [], Response::HTTP_SEE_OTHER);
+        // }
 
-        return $this->renderForm('user/new.html.twig', [
-            'user' => $user,
-            'form' => $form,
-        ]);
+        // return $this->renderForm('user/new.html.twig', [
+        //     'user' => $user,
+        //     'form' => $form,
+        // ]);
     }
 
     #[Route('/{id}', name: 'app_user_show', methods: ['GET'])]

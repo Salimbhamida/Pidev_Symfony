@@ -32,8 +32,8 @@ class CompetencesController extends AbstractController
     #[Route('/new', name: 'app_competences_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {   
-
         $competence = new Competences();
+
         $form = $this->createForm(CompetencesType::class, $competence);
         $form->handleRequest($request);
 

@@ -15,7 +15,23 @@
                     <div class="card-body">
                            <a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://127.0.0.1:8000/portfolio/visit" class="btn btn-info" alt="QR Code"qrcode"><button>Partager Mon Profile</button></a>
 
-                        </div>
+                          </div>
+                            <div>
+    <button type="button" class="btn btn-primary" onclick="showVisitorsCount()"> nombre visiteurs</button>
+</div>
+<div id="visitorsCount" style="display:none">
+    <p>Nombre de visiteurs : {{ visitorsCount }}</p>
+</div>
+
+<script>
+function showVisitorsCount() {
+    var visitorsCountDiv = document.getElementById("visitorsCount");
+    visitorsCountDiv.style.display = "block";
+    setTimeout(function() {
+        visitorsCountDiv.style.display = "none";
+    }, 3000); // La pop-up disparaît après 5 secondes (5000 ms)
+}
+</script>                        
                 </div>
             </div>
         </div>

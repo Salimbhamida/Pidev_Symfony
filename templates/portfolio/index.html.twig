@@ -17,11 +17,10 @@
                     </div>
                     <div class="col-md-7">
                         <div class="card-body">
-                            <a href="{{ path('app_photo_edit', {'id': photo.id}) }}" class="btn btn-primary"> edit</a>
+                            <a href="{{ path('app_photo_edit', {'id': photo.id}) }}" class="btn btn-primary"> editer</a>
                         </div>
                         <div class="card-body">
-                           <a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://127.0.0.1:8000/portfolio/visit" class="btn btn-info" alt="QR Code"qrcode"><button>Partager QR code</button></a>
-
+                           <a href="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=http://127.0.0.1:8000/portfolio/visit" class="btn btn-info" ><button>Partager QR code</button></a>
                         </div>
                     </div>
                 </div>
@@ -30,8 +29,6 @@
         </div>
     {% endfor %}
 </div>
-
-<button id='btnSpeak' class="badge badge-info">Click Me</button>
 
     <div class="row">
         <div class="col-md-4">
@@ -42,7 +39,7 @@
                         <thead>
                             <tr>
                                 <th>Nom</th>
-                                <th>Action</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -50,7 +47,7 @@
                                 <tr>
                                     <td>{{ competence.nom }}</td>
                                     <td>
-                                        <a href="{{ path('app_competences_edit', {'idComp': competence.idComp}) }}">Modifier</a>
+                                        <a href="{{ path('app_competences_edit', {'idComp': competence.idComp}) }}">Editer</a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -75,7 +72,7 @@
                                 <th>Poste</th>
                                 <th>Date de début</th>
                                 <th>Date de fin</th>
-                                <th>Action</th>
+                               
                             </tr>
                         </thead>
                         <tbody>
@@ -86,7 +83,7 @@
                                     <td>{{ experience.dateDebut ? experience.dateDebut|date('Y-m-d') : '' }}</td>
                                     <td>{{ experience.dateFin ? experience.dateFin|date('Y-m-d') : '' }}</td>
                                     <td>
-                                        <a href="{{ path('app_experiences_edit', {'idExp': experience.idExp}) }}">Modifier</a>
+                                        <a href="{{ path('app_experiences_edit', {'idExp': experience.idExp}) }}">Editer</a>
                                     </td>
                                 </tr>
                             {% else %}
@@ -114,7 +111,7 @@
                                 <th>Pays</th>
                                 <th>Diplôme</th>
                                 <th>Date d'obtention</th>
-                                <th>Action</th>
+                                
                             </tr>
                         </thead>
                         <tbody>
@@ -127,7 +124,7 @@
                                     <td>{{ scolarite.dateObtention ? scolarite.dateObtention|date('Y-m-d') : ''}}</td>
 
                 <td>
-                    <a href="{{ path('app_scolarite_edit', {'idEtab': scolarite.idEtab}) }}">Modifier</a>
+                    <a href="{{ path('app_scolarite_edit', {'idEtab': scolarite.idEtab}) }}">Editer</a>
                 </td>
             </tr>
         {% else %}
@@ -137,58 +134,11 @@
         {% endfor %}
         </tbody>
     </table>
-    <a href="{{ path('app_scolarite_new') }}" class="btn btn-primary">Ajouter  education</a>
+    <a href="{{ path('app_scolarite_new') }}" class="btn btn-primary">Ajouter  scolarité</a>
                     </div>
             </div>
         </div>
         </div>
-
-<select id='voiceList' hidden>
-
-            </select> <br><br>
-
-
-            
-
-            <script>
-
-                var voiceList = document.querySelector('#voiceList');
-                var btnSpeak = document.querySelector('#btnSpeak');
-                var synth = window.speechSynthesis;
-                var voices = [];
-
-                PopulateVoices();
-                if(speechSynthesis !== undefined){
-                    speechSynthesis.onvoiceschanged = PopulateVoices;
-                }
-
-                btnSpeak.addEventListener('click', ()=> {
-                    var txtInput= ("Welcome  to your portfolio");
-                    var toSpeak = new SpeechSynthesisUtterance(txtInput);
-                    var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
-                    voices.forEach((voice)=>{
-                        if(voice.name === selectedVoiceName){
-                            toSpeak.voice = voice;
-                        }
-                    });
-                    synth.speak(toSpeak);
-                });
-
-                function PopulateVoices(){
-                    voices = synth.getVoices();
-                    var selectedIndex = voiceList.selectedIndex < 0 ? 6 : voiceList.selectedIndex;
-                    voiceList.innerHTML = '';
-                    voices.forEach((voice)=>{
-                        var listItem = document.createElement('option');
-                        listItem.textContent = voice.name;
-                        listItem.setAttribute('data-lang', voice.lang);
-                        listItem.setAttribute('data-name', voice.name);
-                        voiceList.appendChild(listItem);
-                    });
-
-                    voiceList.selectedIndex = selectedIndex;
-                }
-            </script>
 
 {% endblock %}
 

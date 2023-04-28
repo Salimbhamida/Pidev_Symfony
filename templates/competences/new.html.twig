@@ -5,9 +5,57 @@
 
     {{ include('competences/_form.html.twig') }}
 
-    <a href="{{ path('app_experiences_new') }}">Next </a>
+   
+    <button id="btnSpeak" class="btn btn-info" onclick="window.location.href='{{ path('app_experiences_new') }}'">Next</button>
 
 
+
+<select id='voiceList' hidden>
+
+            </select> <br><br>
+
+
+            
+
+            <script>
+
+                var voiceList = document.querySelector('#voiceList');
+                var btnSpeak = document.querySelector('#btnSpeak');
+                var synth = window.speechSynthesis;
+                var voices = [];
+
+                PopulateVoices();
+                if(speechSynthesis !== undefined){
+                    speechSynthesis.onvoiceschanged = PopulateVoices;
+                }
+
+                btnSpeak.addEventListener('click', ()=> {
+                    var txtInput= ("Great Job");
+                    var toSpeak = new SpeechSynthesisUtterance(txtInput);
+                    var selectedVoiceName = voiceList.selectedOptions[0].getAttribute('data-name');
+                    voices.forEach((voice)=>{
+                        if(voice.name === selectedVoiceName){
+                            toSpeak.voice = voice;
+                        }
+                    });
+                    synth.speak(toSpeak);
+                });
+
+                function PopulateVoices(){
+                    voices = synth.getVoices();
+                    var selectedIndex = voiceList.selectedIndex < 0 ? 6 : voiceList.selectedIndex;
+                    voiceList.innerHTML = '';
+                    voices.forEach((voice)=>{
+                        var listItem = document.createElement('option');
+                        listItem.textContent = voice.name;
+                        listItem.setAttribute('data-lang', voice.lang);
+                        listItem.setAttribute('data-name', voice.name);
+                        voiceList.appendChild(listItem);
+                    });
+
+                    voiceList.selectedIndex = selectedIndex;
+                }
+            </script>
 {% endblock %}
 
 {% block stylesheets %}
@@ -18,7 +66,6 @@
 {% block javascript %}
 <script src="https://code.jquery.com/jquery-3.6.4.min.js" integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
-<script>
 
-</script>
+
 {% endblock %}

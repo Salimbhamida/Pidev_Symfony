@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8">
+        <link rel="stylesheet" href="{{ asset('/font-awesome-free-5.14.4-web/css/all.min.css') }}">
         <title>{% block title %}Welcome!{% endblock %}</title>
         <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
         {# Run `composer require symfony/webpack-encore-bundle` to start using Symfony UX #}
@@ -14,6 +15,7 @@
   <link href="{{asset('https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Raleway:300,300i,400,400i,500,500i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i')}}" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
+  <link rel="stylesheet" href="{{ asset('/font-awesome-free-5.14.4-web/css/all.min.css') }}">
   <link href="{{ asset('/assets/vendor/aos/aos.css') }}" rel="stylesheet">
   <link href="{{ asset('/assets/vendor/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
   <link href="{{ asset('/assets/vendor/bootstrap-icons/bootstrap-icons.css') }}" rel="stylesheet">
@@ -29,7 +31,7 @@
 
         {% block javascripts %}
              <!-- Vendor JS Files -->
- 
+             <link rel="stylesheet" href="{{ asset('\fontawesome-free-5.15.4-web\js\all.min.js') }}">
   <script src="{{ asset('/assets/vendor/aos/aos.js') }}"></script>
   <script src="{{ asset('/assets/vendor/bootstrap/js/bootstrap.bundle.min.js') }}"></script>
   <script src="{{ asset('/assets/vendor/glightbox/js/glightbox.min.js') }}"></script>
