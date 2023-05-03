@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <title>{{ title }}</title>
+    </head>
+    <body>
+    <center>
+    <img src="{{img}}" class="img-fluid" alt="">
+        <h1>{{ title }}</h1>
+        <p>{{ content }}</p>
+       
+            <p> <b style="color:#E5A016;"> le nom du recruteur : </b> {{demandes.nomRecruteur}} </p>
+            <p> <b style="color:#E5A016;"> la remunération : </b> {{demandes.remuneration}} </p>
+             <p> <b style="color:#E5A016;"> l'experience demandé : </b> {{demandes.experience}} an(s)</p>
+             <p> <b style="color:#E5A016;"> la description de la demande : </b> {{demandes.description}} </p>
+              <p> <b style="color:#E5A016;"> la date d expiration  : </b> {{demandes.expiration  ? demandes.expiration|date('Y-m-d') : '' }} </p>
+              <p> <b style="color:#E5A016;"> le numero du recruteur : </b> {{demandes.telephone}} </p> </center>
+
+              <style>
+    body {
+        background-color: #f0f0f0;
+    }
+    h1 {
+        color: #333;
+        font-size: 24px;
+    }
+    p {
+        color: #666;
+        font-size: 16px;
+    }
+</style>
+             
+        
+    </body>
+</html>

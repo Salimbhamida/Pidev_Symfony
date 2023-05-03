@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Poste{% endblock %}
+
+{% block body %}
+   <center> <h1>Poste</h1> </center>
+<center>
+   <div class="card" style="width: 40%;box-shadow: 0px 2px 5px 0px rgba(0,0,0,0.3);">
+  <div class="card-body">
+    <h5 class="card-title"><strong> Poste </strong></h5>
+     <img src="{{ asset('assets/demande_card.png') }}" alt="Image" style="width:400px;height:200px"> </br> </br>
+    <h6 class="card-subtitle mb-2 text-muted"> <strong>experience : </strong>{{ poste.experience }}</h6>
+    <p class="card-text"><strong>  Description : </strong>{{ poste.description }}</p>
+
+
+  {{ include('poste/_delete_form.html.twig') }}
+</div>
+</div>
+    <a href="{{ path('app_poste_index') }}" style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;float: right;">back to list</a>  </br>
+        </br>
+       </br>
+    
+    </center>
+
+
+{% endblock %}

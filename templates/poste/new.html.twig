@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New Poste{% endblock %}
+
+
+{% block body %}
+
+
+<center>
+  <h3 style="font-size: 36px; font-weight: bold; color: #333; text-align: center; margin: 20px 0;"> Apply for your position</h3>
+</center>
+
+ <!-- ======= Portfolio Details Section ======= -->
+    <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-8">
+            <div class="portfolio-details-slider swiper">
+              <div class="swiper-wrapper align-items-center">
+
+                <div class="swiper-slide">
+                  <img src="{{ asset('assets/hiring1.jpg') }}" alt="">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="{{ asset('assets/hiring2.jpg') }}" alt="">
+                </div>
+
+                <div class="swiper-slide">
+                  <img src="{{ asset('assets/hiring3.jpg') }}" alt="">
+                </div>
+
+              </div>
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-4">
+            <div class="portfolio-info">
+              <h3>demande information</h3>
+              <ul>
+                <li><strong>nom du recruteur</strong>: {{demande_pst.nomRecruteur}}</li>
+                <li><strong>description</strong>:      {{ demande_pst.description }}    </li>
+                <li><strong>experience</strong>:       {{ demande_pst.experience }}     </li>
+                <li><strong>remuneration</strong>:     {{ demande_pst.remuneration }}     </li>
+                <li><strong>Télephone</strong>:         {{ demande_pst.telephone }}     </li>
+                <li><strong>date d'expiration</strong>:   {{ demande_pst.expiration ? demande_pst.expiration|date('Y-m-d') : '' }}   </li>
+                <li><strong>Télécharger la demande</strong>:<a href="{{ path('app_generate_pdf', {'idDemande': demande_pst.idDemande}) }}">Generate PDF</a></li>
+              </ul>
+            </div>
+            <div class="portfolio-description">
+              <h2>Description of the process</h2>
+              <p>
+Once you've posted your profile, you can sit back and wait for recruiters to contact you with relevant job opportunities. We are committed to making the recruitment process as seamless as possible, and we hope that by using our platform, you'll find your dream job and get hired soon.              </p>
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+
+
+
+
+
+
+
+
+
+   <center> <h1>Apply for this job offer her</h1> </center>
+<center>
+    {{ include('poste/_form.html.twig') }}
+
+    <a href="{{ path('app_home') }} " style="display: inline-block; background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; text-decoration: none; cursor: pointer;float: right;">back to Home</a> </center>
+</br>
+</br>
+</br>
+
+{% endblock %}

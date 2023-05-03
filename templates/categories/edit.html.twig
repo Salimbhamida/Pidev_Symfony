@@ -1,0 +1,17 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Modifer Categories{% endblock %}
+
+{% block body %}
+
+    <h1>Edit Categories</h1>
+
+    {{ include('categories/_form.html.twig', {'button_label': 'Update'}) }}
+
+    <a type="button" class="btn btn-outline-primary" href="{{ path('app_categories_index') }}">back to list</a>
+<br>
+<br>
+    {{ include('categories/_delete_form.html.twig') }}
+{% endblock %}
+
+

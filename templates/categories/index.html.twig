@@ -1,0 +1,312 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Categories {% endblock %}
+
+{% block body %}
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+ 
+
+
+
+              <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Les categories</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion des categorie</li>
+          <li class="breadcrumb-item active">liste des categorie</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Data tables</h5>
+              <p>La liste des categories disponible dans Notre platfrome TN-Job</p>
+<a  type="button" class="btn btn-primary" href="{{ path('app_categories_new') }}"> 
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+ Ajouter une categorie</a>
+
+
+<div class="datatable-top">
+    <div class="datatable-dropdown">
+
+
+        <form id="recherche-form" action="{{ path('recherchecategorie') }}" method="post">
+    <label for="nomcategorie">Nom du service :</label>
+    <input type="text" id="nomcategorie" name="nomcategorie">
+    <button  class="btn btn-primary" type="submit"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Rechercher</button>
+</form>
+
+</form>
+        </div>
+</div>
+
+              <!-- Table with stripped rows -->
+              <table class="table datatable"  id="services-table">
+                <thead>
+                  <tr>
+                   
+                    <th scope="col">id Categorie</th>
+                    <th scope="col">Nom Categorie</th>
+                    <th scope="col">nbTotService</th>
+                    <th scope="col">Afficher une Categorie</th>
+                    <th scope="col">Modifier une Categorie</th>
+                  </tr>
+                </thead>
+                <tbody>
+                {% for category in categories %}
+            <tr>
+                <td>{{ category.idCategorie }}</td>
+                <td>{{ category.nomCategorie }}</td>
+                <td>{{ category.nbTotService }}</td>
+                <td>
+                    <a type="button" class="btn btn-success" href="{{ path('app_categories_show', {'idCategorie': category.idCategorie}) }}">Afficher</a></td>
+                  <td>  <a type="button" class="btn btn-warning" href="{{ path('app_categories_edit', {'idCategorie': category.idCategorie}) }}">Modifier</a></td>
+                
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">no records found</td>
+            </tr>
+        {% endfor %}
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+  <a type="button"  class="btn btn-outline-secondary" onclick="countServices()"    class="btn btn-primary" type="button" disabled=""> <span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Calculer nombre des categories</a>
+    <div id="result"></div>
+            </div>
+          </div>
+<a type="button"  href="{{ path('trier_categorie') }}"          class="btn btn-primary"><i class="bi bi-star me-1"></i>Trier</a> </td>
+
+        </div>
+      </div>
+
+
+ 
+
+ <div class="col-12">
+              <div class="card">
+
+                <div class="filter">
+                  <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                  <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                    <li class="dropdown-header text-start">
+                      <h6>Filter</h6>
+                    </li>
+
+                    <li><a class="dropdown-item" href="#">Today</a></li>
+                    <li><a class="dropdown-item" href="#">This Month</a></li>
+                    <li><a class="dropdown-item" href="#">This Year</a></li>
+                  </ul>
+                </div>
+
+                <div class="card-body">
+                  <h5 class="card-title">Graphe des categories <span>/Tn-job</span></h5>
+
+                  <!-- Line Chart -->
+                  <div id="reportsChart"></div>
+
+  <script>
+  var categories; 
+
+  var xhr = new XMLHttpRequest();
+  xhr.open('POST', '/categories/recherche/categorie', true);
+  xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+  xhr.onload = function() {
+    if (xhr.status === 200) {
+      var response = JSON.parse(xhr.responseText);
+      categories = response.categories;
+      console.log(response.categories);
+
+      var data = []; 
+      var tot = [];
+      var nomC = [];
+
+      for (var i = 0; i < categories.length; i++) {
+        var categorie = categories[i];
+        var item = {
+          value: categorie.nbtotfreelance,
+          name: categorie.nomcategorie + ' (' + categorie.id + ')'
+        };
+        data.push(item); 
+      }
+      console.log(data);
+
+
+         for (var j = 0; j < categories.length; j++) {
+        var categorie = categories[j];
+        var item = {
+          value: categorie.nbtotfreelance
+          
+        };
+        tot.push(item); 
+      }
+
+      console.log(tot);
+
+
+      
+         for (var n = 0; n < categories.length; n++) {
+        var categorie = categories[n];
+        var item = {
+          value: categorie.nomcategorie
+          
+        };
+        nomC.push(item); 
+      }
+
+      console.log(nomC);
+
+
+                      new ApexCharts(document.querySelector("#reportsChart"), {
+                        series: [{
+                                name: 'Nombre de Freelances',
+                                data: tot.map(function(item) {
+        return item.value;
+    })
+                            }, {
+                          name: 'Revenue',
+                          data: tot
+                        }, {
+                          name: 'Customers',
+                          data: tot
+                        }],
+                        chart: {
+                          height: 350,
+                          type: 'area',
+                          toolbar: {
+                            show: false
+                          },
+                        },
+                        markers: {
+                          size: 4
+                        },
+                        colors: ['#4154f1', '#2eca6a', '#ff771d'],
+                        fill: {
+                          type: "gradient",
+                          gradient: {
+                            shadeIntensity: 1,
+                            opacityFrom: 0.3,
+                            opacityTo: 0.4,
+                            stops: [0, 90, 100]
+                          }
+                        },
+                        dataLabels: {
+                          enabled: false
+                        },
+                        stroke: {
+                          curve: 'smooth',
+                          width: 2
+                        },
+                        xaxis: {
+    categories: nomC.map(function(item) {
+        return item.value;
+    })
+},
+                        tooltip: {
+                          x: {
+                            format: 'dd/MM/yy HH:mm'
+                          },
+                        }
+                      }).render();
+                    
+
+
+    }}
+  xhr.send(); 
+</script>
+
+
+
+
+
+                
+                  <!-- End Line Chart -->
+
+                </div>
+
+              </div>
+            </div><!-- End Reports -->
+
+
+
+
+
+    </section>
+
+
+<script>
+    var rechercheForm = document.getElementById('recherche-form');
+    rechercheForm.addEventListener('submit', function(event) {
+        event.preventDefault(); 
+
+      
+        var nomcategorie = document.getElementById('nomcategorie').value;
+
+       
+        var xhr = new XMLHttpRequest();
+        xhr.open('POST', '/categories/recherche/categorie', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded; charset=UTF-8');
+        xhr.onload = function() {
+            if (xhr.status === 200) {
+                var response = JSON.parse(xhr.responseText);
+               
+               
+                var categories = response.categories;
+  console.log(response.categories);
+       
+                var servicesTable = document.getElementById('services-table');
+                var tbody = servicesTable.getElementsByTagName('tbody')[0];
+                tbody.innerHTML = ''; 
+
+       
+                for (var i = 0; i < categories.length; i++) {
+                    var categorie = categories[i];
+                    var row = tbody.insertRow(i);
+                    var idCell = row.insertCell(0);
+                    var nomServiceCell = row.insertCell(1);
+                    var nbServiceCell = row.insertCell(2);
+
+                    idCell.innerHTML = categorie.id;
+                    
+                    nomServiceCell.innerHTML = categorie.nomcategorie;
+                       nbServiceCell.innerHTML = categorie.nbtotfreelance;        
+                }
+            }
+        };
+
+        xhr.send('nomcategorie=' + encodeURIComponent(nomcategorie)); 
+ 
+    });
+</script>
+
+
+
+
+
+<script>
+        function countServices() {
+           
+            $.ajax({
+                 url: '{{ path('count_categorie_by_id') }}',
+                type: 'GET',
+                success: function(response) {
+                    
+                    $('#result').html(response);
+                }
+            });
+        }
+    </script>
+
+
+  </main>
+
+{% endblock %}

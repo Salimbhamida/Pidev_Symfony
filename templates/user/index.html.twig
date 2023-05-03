@@ -1,0 +1,194 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}User index
+{% endblock %}
+{% block css %}
+	<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<style>
+
+		. @import url('https://fonts.googleapis.com/css2?family=PT+Sans:wght@700 &family=Poppins:wght@600&display=swap');
+
+		* {
+			box-sizing: border-box
+		}
+
+
+		thead {
+			font-family: 'Poppins', sans-serif;
+			font-weight: bolder;
+			font-size: 20px;
+			color: #666
+		}
+
+		img {
+			width: 40px;
+			height: 40px
+		}
+
+		.name {
+			display: inline-block
+		}
+
+		.bg-blue {
+			background-color: #EBF5FB;
+			border-radius: 8px
+		}
+
+		.fa-check,
+		.fa-minus {
+			color: blue
+		}
+
+		.bg-blue:hover {
+			background-color: #3e64ff;
+			color: #eee;
+			cursor: pointer
+		}
+
+		.bg-blue:hover .fa-check,
+		.bg-blue:hover .fa-minus {
+			background-color: #3e64ff;
+			color: #eee
+		}
+
+		.table thead th,
+		.table td {
+			border: none
+		}
+
+		.table tbody td:first-child {
+			border-bottom-left-radius: 10px;
+			border-top-left-radius: 10px
+		}
+
+		.table tbody td:last-child {
+			border-bottom-right-radius: 10px;
+			border-top-right-radius: 10px
+		}
+
+		#spacing-row {
+			height: 10px
+		}
+
+		@media(max-width:575px) {
+			.container {
+				width: 125%;
+				padding: 20px 10px
+			}
+		}
+
+
+		.table-responsive::-webkit-scrollbar-track {
+			-webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+			background-color: #F5F5F5;
+			border-radius: 10px;
+		}
+
+		.table-responsive::-webkit-scrollbar {
+			width: 10px;
+			background-color: #F5F5F5;
+		}
+		.table-responsive::-webkit-scrollbar-thumb {
+			border-radius: 10px;
+			background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0.44, rgb(122,153,217)), color-stop(0.72, rgb(73,125,189)), color-stop(0.86, rgb(28,58,148)));
+		}
+	</style>
+{% endblock %}
+{% block body %}
+	<h1>User index</h1>
+
+	<div class="container rounded mt-5 bg-white p-md-5">
+		<div class="h2 font-weight-bold">Users</div>
+		<div class="table-responsive">
+			<table class="table">
+				<thead>
+					<tr>
+						<th scope="col">#</th>
+						<th scope="col">Username</th>
+						<th scope="col">Email</th>
+						<th scope="col">Password</th>
+						<th scope="col">Role</th>
+						<th scope="col">Roles</th>
+						<th scope="col">RememberToken</th>
+						<th scope="col">CreatedAt</th>
+						<th scope="col">UpdatedAt</th>
+						<th scope="col">actions</th>
+					</tr>
+				</thead>
+				<tbody></tbody>
+			</tr>
+			{% for user in users %}
+				<tr class="bg-blue">
+					<td class="pt-2">
+						{{ user.id }}
+					</td>
+					<td class="pt-3 mt-1">{{ user.username }}</td>
+					<td class="pt-3">{{ user.email }}</td>
+					<td class="pt-3">{{ user.password }}</td>
+					<td class="pt-3">{{ user.role }}</td>
+					<td class="pt-3">
+						{% for role in user.roles %}
+							{% if  role =="ROLE_ADMIN" %}
+								Administrateur
+							{% elseif role =="ROLE_USER" %}
+								Utilisateur
+							{% endif %}
+						{% endfor %}
+					</td>
+					<td class="pt-3">{{ user.rememberToken }}</td>
+					<td class="pt-3">{{ user.createdAt|date('Y-m-d H:i:s') }}</td>
+					<td class="pt-3">{{ user.updatedAt|date('Y-m-d H:i:s') }}</td>
+					<td class="pt-3">
+						<div class="dropdown">
+							<button class="btn btn-secondary " type="button" data-bs-toggle="dropdown" aria-expanded="false">
+								<span class="fa fa-ellipsis-v btn"></span>
+							</button>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="{{ path('app_user_show', {'id': user.id}) }}" class="dropdown-item" title="View" data-toggle="tooltip">
+										<i class="material-icons">&#xE417;</i>
+										View</a>
+								</li>
+
+
+								<li>
+									<a class="dropdown-item" href="{{ path('app_user_edit', {'id': user.id}) }}" class="edit" title="Edit" data-toggle="tooltip">
+										<i class="material-icons">&#xE254;</i>Edit</a>
+								</li>
+								<li>
+									<a class="dropdown-item" href="{{path('app_user_delete', {'id': user.id})}}" class="delete" title="Delete" data-toggle="tooltip">
+										<i class="material-icons">&#xE872;</i>Delete</a>
+								</li>
+								<li>
+									<a href="{{ path('generatePdf', {'id': user.id}) }}" class="dropdown-item" title="Pdf" data-toggle="tooltip">
+										<i class="bi bi-filetype-pdf"></i>Pdf
+
+									</a>
+								</li>
+							</ul>
+						</div>
+					</td>
+				</tr>
+				<tr id="spacing-row">
+					<td></td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+
+	<a href="{{ path('app_user_new') }}">Create new</a>
+</div></div>{% endblock %}{% block js %}<script src="https://code.jquery.com/jquery-3.5.1.min.js"></script><script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"></script><script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js"></script><script>
+$(document).ready(function () {
+$('[data-toggle="tooltip"]').tooltip();
+// Animate select box length
+var searchInput = $(".search-box input");
+var inputGroup = $(".search-box .input-group");
+var boxWidth = inputGroup.width();
+searchInput.focus(function () {
+inputGroup.animate({width: "300"});
+}).blur(function () {
+inputGroup.animate({width: boxWidth});
+});
+});</script>{% endblock %}

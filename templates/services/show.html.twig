@@ -1,0 +1,66 @@
+{% extends 'backbase.html.twig' %}
+
+{% block title %}Services{% endblock %}
+
+{% block body %}
+ 
+
+
+
+
+    
+      <main id="main" class="main">
+
+    <div class="pagetitle">
+      <h1>Service</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+          <li class="breadcrumb-item">Gestion des service</li>
+          <li class="breadcrumb-item active">un service</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    <section class="section">
+      <div class="row">
+        <div class="col-lg-12">
+
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title">Datatables</h5>
+          <p> Le Service </p>
+ 
+              <!-- Table with stripped rows -->
+              <table class="table datatable">
+                <tbody>
+                 <tr>
+                <th>IdService</th>
+                <td>{{ service.idService }}</td>
+            </tr>
+            <tr>
+                <th>NomService</th>
+                <td>{{ service.nomService }}</td>
+            </tr>
+            <tr>
+                <th>NbTotFreelance</th>
+                <td>{{ service.nbTotFreelance }}</td>
+            </tr>
+                </tbody>
+              </table>
+              <!-- End Table with stripped rows -->
+ <a type="button" class="btn btn-outline-primary" href="{{ path('app_services_index') }}">retourner a la liste</a>
+
+   <br>
+   <br>
+
+    {{ include('services/_delete_form.html.twig') }}
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+{% endblock %}

@@ -1,0 +1,290 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+
+
+
+
+ 
+
+ <main id="main">
+
+
+
+
+
+
+  
+    <!-- ======= Breadcrumbs Section ======= -->
+    <section class="breadcrumbs">
+      <div class="container">
+
+        <div class="d-flex justify-content-between align-items-center">
+          <h2>Categorie Details</h2>
+          <ol>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="portfolio.html"> Nos Services</a></li>
+            <li><a href="portfolio.html"> Nos Categories</a></li>
+            <li>Categorie Details</li>
+          </ol>
+        </div>
+
+      </div>
+    </section><!-- Breadcrumbs Section -->
+
+    <!-- ======= Portfolio Details Section ======= -->
+  
+
+<section id="portfolio" class="portfolio section-bg">
+ <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in">Liste Freelancers</h2>
+          <p data-aos="fade-in">Voici tous les Freelancers Disponible dans notre plateforme TN-job vous pouez choisir un</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            
+          </div>
+        </div>
+<div class="row portfolio-container" data-aos="fade-up">
+                 {% for free in freelancers %}
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{asset('assets/portfolio-13.jpg')}}" class="img-fluid" alt="">
+              <div class="portfolio-links">
+                <a href="{{asset('Front/assets/img/portfolio/portfolio-12.jpg')}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
+                <a href="" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+              <div class="portfolio-info">
+                <h4>{{free.username}}</h4>
+                <p>{{free.email}}</p>
+               
+              </div>
+            </div>
+          </div>
+              {% endfor %}
+          
+
+        </div>
+         </section>
+
+      <section id="portfolio-details" class="portfolio-details">
+      <div class="container">
+
+        <div class="row gy-4">
+
+          <div class="col-lg-0">
+           
+              <div class="swiper-pagination"></div>
+            </div>
+          </div>
+
+          <div class="col-lg-12">
+            <div class="portfolio-info">
+              <h3>Categorie Reservation</h3>
+              <ul>
+                <li><strong>Category :</strong>          {{ categories.nomCategorie }}</li>
+                <li><strong>nombre des freelancers :</strong>         {{ categories.nbTotService }}</li>
+                
+              </ul>
+            </div>
+            
+          </div>
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Details Section -->
+
+
+     <section id="contact" class="contact section-bg">
+      <div class="container" data-aos="fade-up">
+
+        <div class="section-title">
+          <h2>Reservation Freelancer</h2>
+          <p></p>
+        </div>
+
+        <div class="row">
+
+          <div class="col-lg-6">
+
+            <div class="row">
+              <div class="col-md-12">
+                <div class="info-box" data-aos="fade-up">
+                  <a class="bx bx-map"></a>
+                  <h3>TN-job plateforme , esprit</h3>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <a href="" class="bx bx-envelope"></a>
+                  <h3>Envoyer nous un mail</h3>
+                  
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+                  <a href="" class="bx bx-phone-call"></a>
+                  <h3>Telephone +71234845</h3>
+                 
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <div class="col-lg-6 mt-4 mt-lg-0">
+  <form id="recherche-form" action="" method="post">
+             
+              <div class="form-group mt-3">
+                <input type="text" class="form-control" name="subject" id="content"  placeholder="QR" required>
+              </div>
+           <div class="form-group mt-1">
+    <textarea class="form-control" rows="5" placeholder="PDF" id="desc" name="desc" required></textarea>
+</div>
+               <div class="container text-center">
+   
+              
+              <div class="my-3">
+             
+                <div class="error-message"></div>
+              
+              </div>
+              
+
+  
+</td>
+       
+          </div>
+<a href="{{ path('pdf') }}" class="btn btn-primary" onclick="generatePDF()"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Générer PDF</a>
+<a type="button"  href="{{ path('mail') }}"          class="btn btn-primary"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>Envoyer mail</a> </td>
+<button type="button" class="btn btn-primary" id="generate"><span class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+            Generate qr code
+          </button>
+        </div>
+
+      </div>
+      
+    </section><!-- End Contact Section -->
+
+
+
+
+
+<head>
+
+  <link rel="stylesheet" href=
+"https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/css/bootstrap.min.css" />
+ 
+  <style>
+    .qr-code {
+      max-width: 200px;
+      margin: 10px;
+    }
+  </style>
+ 
+ 
+</head>
+ 
+<body>
+  <div class="container-fluid">
+    <div class="text-center">
+ 
+ 
+      <img src=
+"https://chart.googleapis.com/chart?cht=qr&chl=Hello+World&chs=160x160&chld=L|0"
+        class="qr-code img-thumbnail img-responsive" />
+    </div>
+ 
+    <div class="form-horizontal">
+      
+      <div class="form-group">
+        <div class="col-sm-offset-2 col-sm-10">
+ 
+         
+        
+        </div>
+      </div>
+    </div>
+  </div>
+  <script src=
+    "https://code.jquery.com/jquery-3.5.1.js">
+  </script>
+ 
+  <script>
+
+    function htmlEncode(value) {
+      return $('<div/>').text(value)
+        .html();
+    }
+ 
+    $(function () {
+ 
+  
+      $('#generate').click(function () {
+        let finalURL =
+'https://chart.googleapis.com/chart?cht=qr&chl=' +
+          htmlEncode($('#content').val()) +
+          '&chs=160x160&chld=L|0'
+        $('.qr-code').attr('src', finalURL);
+      });
+    });
+  </script>
+</body>
+
+
+
+
+
+
+
+
+
+ 
+
+
+  </main><!-- End #main -->
+
+
+<script>
+    function generatePDF() {
+       
+        var desc = document.getElementById('desc').value;
+
+   
+        var xhr = new XMLHttpRequest();
+
+        xhr.open("POST", '/categories/pdfcat', true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+        xhr.responseType = 'blob';
+        xhr.onload = function (event) {
+        
+            var url = window.URL.createObjectURL(xhr.response);
+
+            var link = document.createElement('a');
+            link.href = url;
+            link.download = 'reservation.pdf';
+            link.click();
+            console.log(desc);
+
+            window.URL.revokeObjectURL(url);
+        };
+        xhr.send("desc=" + encodeURIComponent(desc));
+    }
+</script>
+
+
+
+
+
+
+
+  
+
+{% endblock %}

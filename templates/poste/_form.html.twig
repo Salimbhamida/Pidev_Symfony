@@ -1,0 +1,74 @@
+
+{#
+{{ form_start(form,{'attr':{'class': 'my-form','novalidate':'novalidate'}}) }}
+  <div class="form-group">
+    {{ form_label(form.experience) }}
+    {{ form_widget(form.experience, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.description) }}
+    {{ form_widget(form.description, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <div class="form-group">
+    {{ form_label(form.idCandidat) }}
+    {{ form_widget(form.idCandidat, {'attr': {'class': 'form-control'}}) }}
+  </div>
+  <button type="submit" class="btn btn-primary">{{ button_label|default('Postulez') }}</button>
+{{ form_end(form) }} #}
+
+
+  {{ form_start(form,{'attr':{'class': 'my-form','novalidate':'novalidate'}}) }}
+        <div class="form-container">
+            {{ form_widget(form) }}
+            </br>
+            <button class="btn" style="background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; cursor: pointer;">{{ button_label|default('Save') }}</button>
+        </div>
+        </br>
+    {{ form_end(form) }}
+
+
+<style>
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 10px;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  width: 50%;
+  
+}
+
+form label {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+form input[type="date"],
+form input[type="number"],
+form input[type="number"],
+form input[type="text"],
+form input[type="email"],
+form textarea,form select {
+  width: 100%;
+  padding: 0.5rem;
+  margin-bottom: 1rem;
+  border: 2px solid #ccc;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
+
+form input[type="submit"],
+form button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 1rem 2rem;
+  border-radius: 5px;
+  font-size: 1.2rem;
+  cursor: pointer;
+}
+
+form input[type="submit"]:hover,
+form button:hover {
+  background-color: #0069d9;
+}
+</style>

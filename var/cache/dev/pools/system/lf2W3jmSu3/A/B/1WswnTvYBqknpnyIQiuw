@@ -1,0 +1,3 @@
+<?php //App%255CController%255CBadWordsController%2523checkAlone
+
+return [PHP_INT_MAX, []];

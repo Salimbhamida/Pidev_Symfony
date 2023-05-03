@@ -1,0 +1,51 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+
+ <section id="portfolio" class="portfolio section-bg">
+      <div class="container">
+
+        <div class="section-title">
+          <h2 data-aos="fade-in">Categories</h2>
+          <p data-aos="fade-in">Voici tous les categorie dans le service que vous avez choisit</p>
+        </div>
+
+        <div class="row">
+          <div class="col-lg-12">
+            <ul id="portfolio-flters">
+              <li data-filter="*" class="filter-active">All</li>
+              <li data-filter=".filter-app">App</li>
+              <li data-filter=".filter-card">Card</li>
+              <li data-filter=".filter-web">Web</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row portfolio-container" data-aos="fade-up">
+                {% for categorie in categories %}
+          <div class="col-lg-4 col-md-6 portfolio-item filter-app">
+            <div class="portfolio-wrap">
+              <img src="{{asset('assets/portfolio-12.jpg')}}" class="img-fluid" alt="">
+              <div class="portfolio-links">
+                <a href="{{asset('assets/portfolio-12.jpg')}}" data-gallery="portfolioGallery" class="portfolio-lightbox" title="App 1"><i class="bi bi-plus"></i></a>
+                <a href="{{ path('app_categories_categoriedetail' ,{'idCategorie': categorie.idCategorie}) }}" title="More Details"><i class="bi bi-link"></i></a>
+              </div>
+              <div class="portfolio-info">
+                <h4>{{ categorie.nomCategorie }}</h4>
+                <p>{{ categorie.nbTotService }}</p>
+              </div>
+            </div>
+          </div>
+                {% endfor %}
+          
+
+        </div>
+
+      </div>
+    </section><!-- End Portfolio Section -->
+
+
+{% endblock %}
+
+
