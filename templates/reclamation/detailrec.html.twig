@@ -1,0 +1,123 @@
+{% extends "base.html.twig" %}
+
+{% block body %}
+<main>
+
+<div class="hero-area section-bg2">
+<div class="container">
+<div class="row">
+<div class="col-xl-12">
+<div class="slider-area">
+<div class="slider-height2 slider-bg4 d-flex align-items-center justify-content-center">
+<div class="hero-caption hero-caption2">
+
+<h2>Reclamation</h2>
+<nav aria-label="breadcrumb">
+
+</nav>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<section class="blog_area single-post-area section-padding">
+<div class="container">
+<div class="row">
+<div class="col-lg-8 posts-list">
+<div class="single-post">
+<div class="feature-img">
+<img class="img-fluid" src="assets/img/blog/single_blog_1.jpg" alt="">
+</div>
+<div class="blog_details">
+<h4> réclamation </h4>
+{{Reclamation.description }}
+
+<ul class="blog-info-link mt-3 mb-4">
+
+<div class="form-group">
+                          {#
+                        <button class="btn btn-primary"><a href="{{ path('form_C') }}">ajouter</a></button> #}
+                     <a href="{{ path('delete_C',{'id':Reclamation.id}) }}" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                          
+
+                      <a href="{{ path('updateReclmation',{'id':Reclamation.id}) }}"class="btn btn-outline-success"><i class="bi bi-pencil-square"></i></a> 
+
+                        </div>
+</ul>
+
+
+ 
+
+
+
+
+
+
+<div class="quote-wrapper">
+<div class="quotes">
+
+
+</div>
+</div>
+<p class="excert">
+
+</p>
+
+</div>
+</div>
+
+
+</main>
+      <table class="table">
+                                <thead class="thead-dark">
+                                <tr>
+                                    
+                                    <th>id_c </th>
+                            
+                                       <th>date</th>
+                                           <th>réponse</th>
+                                                 <th>id_rec</th>
+                                    
+                                       <th></th>
+                                       <th></th>
+
+
+
+                                </tr>
+                                </thead>
+                                <tbody>
+ {% for c in commentaire %}
+                  <tr>
+                    {#<th scope="row">1</th> #}
+
+                            <td>{{ c.id}}</td>
+                <td>{{c.getDateC ? c.getDateC|date("Y-m-d"):''}}</td>
+                <td>{{c.getDescriptionC}}</td>
+                 <td>{{c.reclamation.id}}</td>
+                   <td>
+              {#  <a href="{{path('delete_Com',{'id':c.id})}}" class="btn btn-outline-danger"><i class="bi bi-trash3-fill"></i></a>
+                <a href="{{path('updateCommentaire',{'id':c.id})}}"  class="btn btn-outline-primary"><i class="bi bi-pencil-square"></i></a> #}
+                </td>
+                  </tr>
+                       {% endfor %}  
+
+
+                                </tbody>
+                            </table>
+
+             
+
+
+   
+
+
+  {#                     
+
+<a href="{{path('addcom2',{'id':Reclamation.id})}}"><button class='btn btn-secondary'>laisser un commentaire</button></a>
+#}
+{% endblock %}
+
+

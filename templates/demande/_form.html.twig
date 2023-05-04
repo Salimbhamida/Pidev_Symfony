@@ -11,7 +11,8 @@
 
 	{{ form_row(form.expiration) }}
 
-	{{ form_row(form.idRecruteur, {'value' : app.user.id }) }}
+	{{ form_row(form.idRecruteur, {'empty_data' : app.user }) }}
+
 
 	<button class="btn" style="background-color: #fdc134; color: white; border: none; padding: 8px 15px; font-size: 14px; cursor: pointer;">{{ button_label|default('Save') }}</button>
 </div></br>{{ form_end(form) }}<style>

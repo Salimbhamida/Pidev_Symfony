@@ -21,7 +21,19 @@ class DemandeType extends AbstractType
       ->add('remuneration', null, ['attr' => ['empty_data' => '']])
       ->add('telephone', null, ['attr' => ['empty_data' => '']])
       ->add('expiration', null, ['attr' => ['empty_data' => '']])
-      ->add('idRecruteur', TextType::class);
+      ->add('idRecruteur', EntityType::class, [
+        // looks for choices from this entity
+        'class' => User::class,
+
+        // uses the User.username property as the visible option string
+        'choice_label' => 'id',
+        'mapped' => false,
+
+
+        // used to render a select box, check boxes or radios
+        // 'multiple' => true,
+        // 'expanded' => true,
+      ]);
   }
 
   public function configureOptions(OptionsResolver $resolver): void

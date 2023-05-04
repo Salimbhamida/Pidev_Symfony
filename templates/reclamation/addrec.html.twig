@@ -1,0 +1,93 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+
+
+	<!-- ======= Contact Section ======= -->
+	<section id="contact" class="contact section-bg">
+		<div class="container" data-aos="fade-up">
+
+			<div class="section-title">
+				<h2>Reclamation</h2>
+				<p></p>
+				{% if app.session.flashBag.has('error') %}
+
+					{% set successMessages = app.session.flashBag.get('error') %}
+					{% if successMessages|length > 0 %}
+						<div class="alert alert-warning" id="success-message">
+							{{ successMessages[0] }}
+						</div>
+						<script>
+							setTimeout(function () {
+document.getElementById("success-message").style.display = "none";
+}, 5000); // 5000 milliseconds = 5 seconds
+						</script>
+						{% do app.session.flashBag.clear('error') %}
+
+					{% endif %}
+				{% endif %}
+
+
+			</div>
+
+			<div class="row">
+
+				<div class="col-lg-6">
+
+					<div class="row">
+						<div class="col-md-12">
+							<div class="info-box" data-aos="fade-up">
+								<i class="bx bx-map"></i>
+								<h3>Notre Adresse</h3>
+								<p>Rue valence, Tunis 2058</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+								<i class="bx bx-envelope"></i>
+								<h3>Email Us</h3>
+								<p>TN-JOB@gmail.com<br>Cybers@gmail.com</p>
+							</div>
+						</div>
+						<div class="col-md-6">
+							<div class="info-box mt-4" data-aos="fade-up" data-aos-delay="100">
+								<i class="bx bx-phone-call"></i>
+								<h3>Call Us</h3>
+								<p>+216 71 500 000<br>+216 53 500 500</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+
+				<div class="col-lg-6 mt-4 mt-lg-0">
+
+					<div class="row">
+
+
+						{{form_start(formC, {'attr': {novalidate: 'novalidate'}}) }}
+
+
+						<div class="form-group mt-3">
+							{{ form_widget(formC.description, {'attr': {'class': 'form-control'}}) }}
+							{{ form_errors(formC.description, {'attr': {'class': 'text-danger'}}) }}
+						</div>
+
+						<div class="form-group">
+							<div class="text-center">
+								<button class="btn btn-primary">{{ button_label|default('envoyer') }}</button>
+							</div>
+
+						</div>
+
+
+						{{form_end(formC)}}
+					</div>
+
+				</div>
+
+			</div>
+		</section>
+		<!-- End Contact Section -->
+
+
+	{% endblock %}

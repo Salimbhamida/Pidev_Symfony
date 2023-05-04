@@ -16,25 +16,34 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class DemandeRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, Demande::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+    parent::__construct($registry, Demande::class);
+  }
 
-    public function findById($idDemande): ?Demande
-    {
-        return $this->createQueryBuilder('d')
-            ->where('d.idDemande = :value')
-            ->setParameter('value', $idDemande)
-            ->getQuery()
-            ->getOneOrNullResult();
-    }
+  public function findById($idDemande): ?Demande
+  {
+    return $this->createQueryBuilder('d')
+      ->where('d.idDemande = :value')
+      ->setParameter('value', $idDemande)
+      ->getQuery()
+      ->getOneOrNullResult();
+  }
+  public function findByIdRecruteur($idRecruteur): ?array
+  {
+    return $this->createQueryBuilder('d')
+      ->where('d.idRecruteur = :value')
+      ->setParameter('value', $idRecruteur)
+      ->getQuery()
+      ->getResult();
+  }
 
-    
 
-    
 
-    /*
+
+
+
+  /*
     public function save(Classroom $entity, bool $flush = false): void
     {
         $this->getEntityManager()->persist($entity);
@@ -51,30 +60,30 @@ class DemandeRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
-    } */ 
+    } */
 
-//    /**
-//     * @return Classroom[] Returns an array of Classroom objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+  //    /**
+  //     * @return Classroom[] Returns an array of Classroom objects
+  //     */
+  //    public function findByExampleField($value): array
+  //    {
+  //        return $this->createQueryBuilder('c')
+  //            ->andWhere('c.exampleField = :val')
+  //            ->setParameter('val', $value)
+  //            ->orderBy('c.id', 'ASC')
+  //            ->setMaxResults(10)
+  //            ->getQuery()
+  //            ->getResult()
+  //        ;
+  //    }
 
-//    public function findOneBySomeField($value): ?Classroom
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+  //    public function findOneBySomeField($value): ?Classroom
+  //    {
+  //        return $this->createQueryBuilder('c')
+  //            ->andWhere('c.exampleField = :val')
+  //            ->setParameter('val', $value)
+  //            ->getQuery()
+  //            ->getOneOrNullResult()
+  //        ;
+  //    }
 }

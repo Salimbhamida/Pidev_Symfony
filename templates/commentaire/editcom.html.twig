@@ -1,0 +1,100 @@
+{% extends 'backbase.html.twig' %}
+
+{% block body %}
+
+	<main id="main" class="main">
+
+		<section class="section">
+			<div class="content-page">
+				<div class="content">
+					<div</i class="container-fluid" <div class="row"> <div class="col-md-12" style="display: flex; justify-content: center;align-items:center;width: 100%" > <div class="card-box"> <div class="dropdown pull-right"> <a href="#" class="dropdown-toggle arrow-none card-drop" data-toggle="dropdown" aria-expanded="false"> <i class="mdi mdi-dots-vertical">></a>
+				</div>
+			</div>
+		</div>
+	</div>
+	{#
+	                            {{form_start(formCom, {'attr': {novalidate: 'novalidate'}}) }}
+	
+	
+	                        <div class="form-group">
+	
+	                            <label for="nom">Date</label>
+	
+	
+	                            {{ form_widget(formCom.date_c, {'attr': {'class': 'form-control'}}) }}
+	                            {{ form_errors(formCom.date_c, {'attr': {'class': 'text-danger'}}) }}
+	
+	                       </div>
+	
+	
+	                
+	
+	                           <div class="form-group">
+	
+	                            <label for="nom">description</label>
+	
+	
+	                            {{ form_widget(formCom.description_c, {'attr': {'class': 'form-control'}}) }}
+	                            {{ form_errors(formCom.description_c, {'attr': {'class': 'text-danger'}}) }}
+	
+	                       </div>
+	
+	
+	                        <div class="form-group">
+	                            <button class="btn btn-primary">{{ button_label|default('Save') }}</button>
+	
+	                        </div>
+	
+	
+	                        {{form_end(formCom)}}
+	
+	
+	#}
+
+
+	{{ form_start(formCom,{attr:{novalidate:'novalidate'}}) }}
+
+	<div class="row mb-3">
+		<label for="inputEmail3" class="col-sm-10 col-form-label">description</label>
+		<div class="col-sm-10">
+			{{ form_widget(formCom.description_c,{'attr':{'class':'form-control'}}) }}
+			{{ form_errors(formCom.description_c,{'attr':{'class':'text_danger'}}) }}
+		</div>
+	</div>
+	<div class="row mb-3">
+		<label for="inputEmail3" class="col-sm-10 col-form-label"></label>
+		<div
+			class="col-sm-10">{# {{ form_widget(formCom.reclamation,{'att':{'class':'form-control'}}) }} #}
+		</div>
+	</div>
+
+
+	<div class="text-center">
+		<button type="submit" data-bs-toggle="modal" data-bs-target="#basicModal" class="btn btn-primary">{{ button_label|default('Save') }}</button>
+		<button type="reset" class="btn btn-secondary">Reset</button>
+
+
+		<div class="modal fade" id="basicModal" tabindex="-1">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Ajout Categorie</h5>
+						<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+					</div>
+					<div class="modal-body">
+						EN COURS
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save changes</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
+	{{ form_end(formCom)}}
+	<!-- End Horizontal Form -->
+
+
+</section></main><!-- End #main -->{% endblock %}
